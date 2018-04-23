@@ -1,0 +1,21 @@
+<div id="background">
+  <div id="login" style="position: relative; top:200px; ">
+    <div class="wrapper" >
+      <form class="form-signin" target="nm_iframe1">
+        <h2 class="form-signin-heading">Please login</h2>
+        <br>
+        <input type="text" class="form-control" name="email" placeholder="Email Address"  [(ngModel)]="email"/>
+
+        <input style="margin-top: 10px" type="password" class="form-control"  name="password" placeholder="password" [(ngModel)]="password"/>
+
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="login($event)">Login</button>
+        <label *ngIf="invalid1===1" style="color: #873920;" id="invalid1" >Invalid username/password!</label>
+        <label *ngIf="invalid2===1" style="color: #873920; " id="invalid2">Invalid format of email!</label>
+        <label *ngIf="invalid5===1" style="color: #873920; " id="invalid5">Disabled account!</label>
+      </form>
+
+      <iframe id="id_iframe1" name="nm_iframe1" style="display:none;"></iframe>
+    </div>
+  </div>
+</div>
