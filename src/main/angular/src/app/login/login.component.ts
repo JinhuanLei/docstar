@@ -11,9 +11,9 @@ import "rxjs/add/operator/map";
 })
 export class LoginComponent implements OnInit {
 
-  @Input() email : string;
+  @Input() username : string;
   @Input() password : string;
-  LOGIN_URL : string ="/wordgame/api/login/v3"
+  LOGIN_URL : string ="/docstar/api/v1/login"
   invalid1:any=0;
   invalid2:any=0;
   invalid5:any=0;
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   }
   validateUser(){
-    this.http.get<UserResponse>( "/wordgame/api/uid/v4").subscribe(
+    this.http.get<UserResponse>( "/docstar/api/v1/user").subscribe(
       data => {
         console.log(data);
         if(data.role=="ADMIN"){
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     this.invalid2=0;
     this.invalid5=0;
 
-    var credentials = { email : this.email, password : this.password };
+    var credentials = { username : this.username, password : this.password };
     this.http.post<UserResponse>( this.LOGIN_URL, credentials, { observe : 'response'} )
       .map( res => {
         this.csrf=res.headers.get('CSRF-Token') ;

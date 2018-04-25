@@ -12,4 +12,12 @@ public class UserController {
     public ModelAndView index() {
         return new ModelAndView("index.html");
     }
+
+    @RequestMapping(value = "/docstar/api/v1/login", method = RequestMethod.POST)
+    public ModelAndView login() {
+        return new ModelAndView("index.html");
+    }
+
+
+
 }
