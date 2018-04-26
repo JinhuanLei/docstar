@@ -8,17 +8,20 @@ import {RouterModule, Routes} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {UserServiceService} from "./user-service.service";
+import { UserpageComponent } from './userpage/userpage.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent },
+  {path: 'userpage', component:  UserpageComponent }
 ]
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    UserpageComponent
   ],
   imports: [
     BrowserModule,

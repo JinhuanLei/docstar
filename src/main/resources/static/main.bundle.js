@@ -94,9 +94,11 @@ var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.j
 var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var user_service_service_1 = __webpack_require__("./src/app/user-service.service.ts");
+var userpage_component_1 = __webpack_require__("./src/app/userpage/userpage.component.ts");
 var routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: login_component_1.LoginComponent },
+    { path: 'userpage', component: userpage_component_1.UserpageComponent }
 ];
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -105,7 +107,8 @@ var AppModule = /** @class */ (function () {
         core_1.NgModule({
             declarations: [
                 app_component_1.AppComponent,
-                login_component_1.LoginComponent
+                login_component_1.LoginComponent,
+                userpage_component_1.UserpageComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -163,15 +166,15 @@ var LoginComponent = /** @class */ (function () {
         this.http = http;
         this.router = router;
         this.userService = userService;
-        this.LOGIN_URL = "/docstar/api/v1/login";
+        this.LOGIN_URL = "/login";
         this.invalid1 = 0;
         this.invalid2 = 0;
         this.invalid5 = 0;
     }
     LoginComponent.prototype.ngOnInit = function () {
-        // this.email = "samwise@mordor.org";
-        // this.password = "123";
-        this.validateUser();
+        this.username = "kenny";
+        this.password = "123";
+        // this.validateUser();
     };
     LoginComponent.prototype.validateUser = function () {
         var _this = this;
@@ -204,12 +207,12 @@ var LoginComponent = /** @class */ (function () {
             console.log(data);
             _this.userService.setUser(data);
             sessionStorage.setItem("user", JSON.stringify(data));
-            if (data.role == "ADMIN") {
-                _this.router.navigateByUrl('adminpage');
-            }
-            else {
-                _this.router.navigateByUrl('gamelist');
-            }
+            // if(data.role=="ADMIN"){
+            //   this.router.navigateByUrl( 'adminpage');
+            // }else{
+            //   this.router.navigateByUrl( 'gamelist');
+            // }
+            _this.router.navigateByUrl('userpage');
         }, function (error) {
             console.log(error);
             if (error.error == "Forbidden") {
@@ -284,6 +287,56 @@ var UserServiceService = /** @class */ (function () {
     return UserServiceService;
 }());
 exports.UserServiceService = UserServiceService;
+
+
+/***/ }),
+
+/***/ "./src/app/userpage/userpage.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/userpage/userpage.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  userpage works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/userpage/userpage.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var UserpageComponent = /** @class */ (function () {
+    function UserpageComponent() {
+    }
+    UserpageComponent.prototype.ngOnInit = function () {
+    };
+    UserpageComponent = __decorate([
+        core_1.Component({
+            selector: 'app-userpage',
+            template: __webpack_require__("./src/app/userpage/userpage.component.html"),
+            styles: [__webpack_require__("./src/app/userpage/userpage.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], UserpageComponent);
+    return UserpageComponent;
+}());
+exports.UserpageComponent = UserpageComponent;
 
 
 /***/ }),

@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   @Input() username : string;
   @Input() password : string;
-  LOGIN_URL : string ="/docstar/api/v1/login"
+  LOGIN_URL : string ="/login"
   invalid1:any=0;
   invalid2:any=0;
   invalid5:any=0;
@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
-    // this.email = "samwise@mordor.org";
-    // this.password = "123";
-    this.validateUser();
+    this.username = "kenny";
+    this.password = "123";
+    // this.validateUser();
 
   }
   validateUser(){
@@ -63,11 +63,12 @@ export class LoginComponent implements OnInit {
 
           this.userService.setUser( data );
           sessionStorage.setItem("user", JSON.stringify(data));
-          if(data.role=="ADMIN"){
-            this.router.navigateByUrl( 'adminpage');
-          }else{
-            this.router.navigateByUrl( 'gamelist');
-          }
+          // if(data.role=="ADMIN"){
+          //   this.router.navigateByUrl( 'adminpage');
+          // }else{
+          //   this.router.navigateByUrl( 'gamelist');
+          // }
+          this.router.navigateByUrl( 'userpage');
         },
         error=>{
           console.log(error);
