@@ -1,12 +1,11 @@
 package com.lei.docstar.controllers;
 
+import com.lei.docstar.models.test;
 import com.lei.docstar.models.user;
+import com.lei.docstar.security.BadRequestException;
 import com.lei.docstar.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
@@ -21,14 +20,25 @@ public class UserController {
     }
 
 
-//    @RequestMapping(value = "/docstar/api/v1/login", method = RequestMethod.POST)
-//    public user login(@RequestParam String username, @RequestParam String password) {
-//           user u=new user();
-//        u.setUsername(username);
-//        u.setPassword(password);
-//        System.out.println(u);
-//        return u;
-//    }
 
+    @RequestMapping(value = "/docstar/api/v1/{uid}", method = RequestMethod.GET)
+    public user getUserByID(@PathVariable String uid) {
+        return userService.findById(uid);
+    }
+
+
+    @RequestMapping(value = "/docstar/api/v1/{uid}", method = RequestMethod.PUT)
+    public user updateUserByID(@PathVariable String uid ,@RequestBody user user) throws BadRequestException {
+
+
+        return user;
+        //        System.out.println(user.get_id());
+//        if( user.get_id().equals(uid) ) {
+//            return userService.updateUser(user);
+//        } else {
+//            throw new BadRequestException();
+//        }
+
+    }
 
 }

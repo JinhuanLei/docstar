@@ -32,6 +32,18 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public user findById(String tid) {
+        return userRepository.findById( tid ).get();
+    }
+
+    public user createUser(user t) {
+        return userRepository.save(t);
+    }
+
+    public user updateUser( user t ) {
+        return userRepository.save( t );
+    }
+
     @PostConstruct
     public void makeMockUsers() {
         if( this.userRepository.count() > 0 ) return;

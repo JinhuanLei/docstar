@@ -31,29 +31,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-            		.antMatchers("/","/styles.bundle.js","/**.jpg","/polyfills.bundle.js","/vendor.bundle.js","/main.bundle.js","/favicon.ico","/inline.bundle.js","/css/**", "/assets/**", "/js/**", "/user", "/login", "/logout").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .exceptionHandling()
-            		.authenticationEntryPoint(authDenied)
-            		.and()
-            .formLogin()
-				.successHandler(authSuccess)
-				.failureHandler(authFailure)
-				.loginPage("/")
-				.loginProcessingUrl("/login")
-				.defaultSuccessUrl("/user")
-				.usernameParameter("username")
-				.passwordParameter("password")
-				.permitAll()
-                .and()
-            .logout()
-                .permitAll()
-                .and()
-            .csrf()
-            		.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+//        http
+//            .authorizeRequests()
+//            		.antMatchers("/","/styles.bundle.js","/**.jpg","/polyfills.bundle.js","/vendor.bundle.js","/main.bundle.js","/favicon.ico","/inline.bundle.js","/css/**", "/assets/**", "/js/**", "/user", "/login", "/logout").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//            .exceptionHandling()
+//            		.authenticationEntryPoint(authDenied)
+//            		.and()
+//            .formLogin()
+//				.successHandler(authSuccess)
+//				.failureHandler(authFailure)
+//				.loginPage("/")
+//				.loginProcessingUrl("/login")
+//				.defaultSuccessUrl("/user")
+//				.usernameParameter("username")
+//				.passwordParameter("password")
+//				.permitAll()
+//                .and()
+//            .logout()
+//                .permitAll()
+//                .and()
+//            .csrf()
+//            		.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
     }
 
     @Autowired

@@ -2,6 +2,7 @@ package com.lei.docstar.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,9 +11,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@SuppressWarnings("serial")
+@Document
 public class user implements UserDetails {
     @Id
-    private String id;
+    private String _id;
     @Indexed(unique=true)
     private String username;
     private String firstname;
@@ -21,15 +24,15 @@ public class user implements UserDetails {
     private String email;
     private String picture;
     private List<String> phone;
-   private String role;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
     private List<String> roles;
+public user(){
 
+}
     public user(Builder b) {
-        this.role = b.role;
         this.firstname=b.firstname;
         this.lastname=b.lastname;
         this.email=b.email;
@@ -45,17 +48,8 @@ public class user implements UserDetails {
         this.isEnabled = b.isEnabled;
     }
 
-    public user() {
 
-    }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public String getUsername() {
         return username;
@@ -114,7 +108,13 @@ public class user implements UserDetails {
         this.lastname = lastname;
     }
 
+    public String get_id() {
+        return _id;
+    }
 
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
     public String getPassword() {
         return password;
