@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        http
 //            .authorizeRequests()
-//            		.antMatchers("/","/styles.bundle.js","/**.jpg","/polyfills.bundle.js","/vendor.bundle.js","/main.bundle.js","/favicon.ico","/inline.bundle.js","/css/**", "/assets/**", "/js/**", "/User", "/login", "/logout").permitAll()
+//            		.antMatchers("/","/styles.bundle.js","/**.jpg","/polyfills.bundle.js","/vendor.bundle.js","/main.bundle.js","/favicon.ico","/inline.bundle.js","/css/**", "/assets/**", "/js/**", "/user", "/login", "/logout").permitAll()
 //                .anyRequest().authenticated()
 //                .and()
 //            .exceptionHandling()
@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.failureHandler(authFailure)
 //				.loginPage("/")
 //				.loginProcessingUrl("/login")
-//				.defaultSuccessUrl("/User")
+//				.defaultSuccessUrl("/user")
 //				.usernameParameter("username")
 //				.passwordParameter("password")
 //				.permitAll()

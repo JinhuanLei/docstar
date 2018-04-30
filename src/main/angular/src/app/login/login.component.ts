@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from '../user-service.service';
 import "rxjs/add/operator/map";
@@ -13,7 +13,8 @@ export class LoginComponent implements OnInit {
 
   @Input() username : string;
   @Input() password : string;
-  LOGIN_URL : string ="/login"
+  // LOGIN_URL : string ="/login"
+  LOGIN_URL : string ="/docstar/api/v1/login"
   invalid1:any=0;
   invalid2:any=0;
   invalid5:any=0;
@@ -21,13 +22,13 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
-    this.username = "kenny";
+    this.username = "hunt";
     this.password = "123";
     // this.validateUser();
 
   }
   validateUser(){
-    this.http.get<UserResponse>( "/docstar/api/v1/User").subscribe(
+    this.http.get<UserResponse>( "/docstar/api/v1/user").subscribe(
       data => {
         console.log(data);
         if(data.role=="ADMIN"){
@@ -46,17 +47,17 @@ export class LoginComponent implements OnInit {
     this.invalid1=0;
     this.invalid2=0;
     this.invalid5=0;
-
-    var credentials = { username : this.username, password : this.password };
-    this.http.post<UserResponse>( this.LOGIN_URL, credentials, { observe : 'response'} )
-      .map( res => {
-        this.csrf=res.headers.get('CSRF-Token') ;
-        this.userService.setToken( res.headers.get('CSRF-Token') );
-        sessionStorage.setItem("csrf", this.csrf);
-        console.log(this.csrf);
-        return res.body;
-
-      })
+    var credentials = JSON.parse( JSON.stringify( {username:this.username,password:this.password} ) );
+    let head = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post<UserResponse>( this.LOGIN_URL, credentials, {headers : head} )
+      // .map( res => {
+      //   this.csrf=res.headers.get('CSRF-Token') ;
+      //   this.userService.setToken( res.headers.get('CSRF-Token') );
+      //   sessionStorage.setItem("csrf", this.csrf);
+      //   console.log(this.csrf);
+      //   return res.body;
+      //
+      // })
       .subscribe(
         (data) => {
           console.log(data);

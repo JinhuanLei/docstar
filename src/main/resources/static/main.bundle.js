@@ -137,7 +137,7 @@ module.exports = "\n\na {\n  color: #00B7FF;\n}\n\n#login-form {\n  max-width : 
 /***/ "./src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"background\">\n  <div id=\"login\" style=\"position: relative; top:200px; \">\n    <div class=\"wrapper\" >\n      <form class=\"form-signin\" target=\"nm_iframe1\">\n        <h2 class=\"form-signin-heading\">Please login</h2>\n        <br>\n        <input type=\"text\" class=\"form-control\" name=\"email\" placeholder=\"Username\"  [(ngModel)]=\"username\"/>\n\n        <input style=\"margin-top: 10px\" type=\"password\" class=\"form-control\"  name=\"password\" placeholder=\"password\" [(ngModel)]=\"password\"/>\n\n        <br>\n        <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\" (click)=\"login($event)\">Login</button>\n        <label *ngIf=\"invalid1===1\" style=\"color: #873920;\" id=\"invalid1\" >Invalid username/password!</label>\n        <label *ngIf=\"invalid2===1\" style=\"color: #873920; \" id=\"invalid2\">Invalid format of email!</label>\n        <label *ngIf=\"invalid5===1\" style=\"color: #873920; \" id=\"invalid5\">Disabled account!</label>\n      </form>\n\n      <iframe id=\"id_iframe1\" name=\"nm_iframe1\" style=\"display:none;\"></iframe>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div id=\"background\">\n  <div id=\"login\" style=\"position: relative; top:200px; \">\n    <div class=\"wrapper\" >\n      <form class=\"form-signin\" target=\"nm_iframe1\">\n        <h2 class=\"form-signin-heading\">Please login</h2>\n        <br>\n        <input type=\"text\" class=\"form-control\" name=\"username\" placeholder=\"Username\"  [(ngModel)]=\"username\"/>\n\n        <input style=\"margin-top: 10px\" type=\"password\" class=\"form-control\"  name=\"password\" placeholder=\"password\" [(ngModel)]=\"password\"/>\n\n        <br>\n        <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\" (click)=\"login($event)\">Login</button>\n        <label *ngIf=\"invalid1===1\" style=\"color: #873920;\" id=\"invalid1\" >Invalid username/password!</label>\n        <label *ngIf=\"invalid2===1\" style=\"color: #873920; \" id=\"invalid2\">Invalid format of email!</label>\n        <label *ngIf=\"invalid5===1\" style=\"color: #873920; \" id=\"invalid5\">Disabled account!</label>\n      </form>\n\n      <iframe id=\"id_iframe1\" name=\"nm_iframe1\" style=\"display:none;\"></iframe>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -166,19 +166,20 @@ var LoginComponent = /** @class */ (function () {
         this.http = http;
         this.router = router;
         this.userService = userService;
-        this.LOGIN_URL = "/login";
+        // LOGIN_URL : string ="/login"
+        this.LOGIN_URL = "/docstar/api/v1/login";
         this.invalid1 = 0;
         this.invalid2 = 0;
         this.invalid5 = 0;
     }
     LoginComponent.prototype.ngOnInit = function () {
-        this.username = "kenny";
+        this.username = "hunt";
         this.password = "123";
         // this.validateUser();
     };
     LoginComponent.prototype.validateUser = function () {
         var _this = this;
-        this.http.get("/docstar/api/v1/User").subscribe(function (data) {
+        this.http.get("/docstar/api/v1/user").subscribe(function (data) {
             console.log(data);
             if (data.role == "ADMIN") {
                 _this.router.navigateByUrl('adminpage');
@@ -194,15 +195,9 @@ var LoginComponent = /** @class */ (function () {
         this.invalid1 = 0;
         this.invalid2 = 0;
         this.invalid5 = 0;
-        var credentials = { username: this.username, password: this.password };
-        this.http.post(this.LOGIN_URL, credentials, { observe: 'response' })
-            .map(function (res) {
-            _this.csrf = res.headers.get('CSRF-Token');
-            _this.userService.setToken(res.headers.get('CSRF-Token'));
-            sessionStorage.setItem("csrf", _this.csrf);
-            console.log(_this.csrf);
-            return res.body;
-        })
+        var credentials = JSON.parse(JSON.stringify({ username: this.username, password: this.password }));
+        var head = new http_1.HttpHeaders({ 'Content-Type': 'application/json' });
+        this.http.post(this.LOGIN_URL, credentials, { headers: head })
             .subscribe(function (data) {
             console.log(data);
             _this.userService.setUser(data);
