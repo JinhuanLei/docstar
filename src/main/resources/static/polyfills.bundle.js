@@ -5129,7 +5129,7 @@ __webpack_require__("./node_modules/core-js/es7/reflect.js");
 // import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
- * user can disable parts of macroTask/DomEvents patch by setting following flags
+ * User can disable parts of macroTask/DomEvents patch by setting following flags
  */
 // (window as any).__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
 // (window as any).__Zone_disable_on_property = true; // disable patch onProperty such as onclick

@@ -178,7 +178,7 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent.prototype.validateUser = function () {
         var _this = this;
-        this.http.get("/docstar/api/v1/user").subscribe(function (data) {
+        this.http.get("/docstar/api/v1/User").subscribe(function (data) {
             console.log(data);
             if (data.role == "ADMIN") {
                 _this.router.navigateByUrl('adminpage');

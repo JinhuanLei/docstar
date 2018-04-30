@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   }
   validateUser(){
-    this.http.get<UserResponse>( "/docstar/api/v1/user").subscribe(
+    this.http.get<UserResponse>( "/docstar/api/v1/User").subscribe(
       data => {
         console.log(data);
         if(data.role=="ADMIN"){

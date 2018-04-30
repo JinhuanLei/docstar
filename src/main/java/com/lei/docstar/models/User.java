@@ -13,10 +13,10 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 @Document
-public class user implements UserDetails {
+public class User implements UserDetails {
     @Id
     private String _id;
-    @Indexed(unique=true)
+    @Indexed(unique = true)
     private String username;
     private String firstname;
     private String lastname;
@@ -29,15 +29,25 @@ public class user implements UserDetails {
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
     private List<String> roles;
-public user(){
 
-}
-    public user(Builder b) {
-        this.firstname=b.firstname;
-        this.lastname=b.lastname;
-        this.email=b.email;
-        this.picture=b.picture;
-        this.phone=b.phone;
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public User() {
+
+    }
+
+    public User(Builder b) {
+        this.firstname = b.firstname;
+        this.lastname = b.lastname;
+        this.email = b.email;
+        this.picture = b.picture;
+        this.phone = b.phone;
 
         this.roles = b.roles;
         this.password = b.password;
@@ -47,9 +57,6 @@ public user(){
         this.isCredentialsNonExpired = b.isCredentialsNonExpired;
         this.isEnabled = b.isEnabled;
     }
-
-
-
 
     public String getUsername() {
         return username;
@@ -75,17 +82,24 @@ public user(){
         return this.isEnabled;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for( String s : roles ) {
-            authorities.add( new SimpleGrantedAuthority( s ) );
+        for (String s : roles) {
+            authorities.add(new SimpleGrantedAuthority(s));
         }
 
         return authorities;
     }
 
+    public void setAuthorities(List<SimpleGrantedAuthority> roles) {
+//        List<GrantedAuthority> authorities=new ArrayList<>();
+        List<String> theroles=new ArrayList<>();
+        for(int x=0;x<roles.size();x++){
+            theroles.add((roles.get(x).getAuthority()));
+        }
+        this.roles=theroles;
+    }
 
 
     public void setUsername(String username) {
@@ -151,7 +165,7 @@ public user(){
 
     public static class Builder {
         private String id;
-        @Indexed(unique=true)
+        @Indexed(unique = true)
         private String username;
         private String firstname;
         private String lastname;
@@ -166,20 +180,73 @@ public user(){
         private boolean isEnabled;
         private List<String> roles;
 
-        public Builder roles( List<String> roles ) { this.roles = roles; return this; }
-        public Builder username( String username ) { this.username = username; return this; }
-        public Builder password( String password ) { this.password = password; return this; }
-        public Builder isAccountNonExpired( boolean f ) { this.isAccountNonExpired = f; return this; }
-        public Builder isAccountNonLocked( boolean f ) { this.isAccountNonLocked = f; return this; }
-        public Builder isCredentialsNonExpired( boolean f) { this.isCredentialsNonExpired = f; return this; }
-        public Builder isEnabled( boolean f ) { this.isEnabled = f; return this; }
-      public Builder firstname(String firstname){this.firstname=firstname; return this;}
-        public Builder lastname(String lastname){this.lastname=lastname; return this;}
-        public Builder email(String email){this.email=email;return this;}
-        public Builder phone(List<String> phone){this.phone=phone;return this;}
-        public Builder picture(String picture){this.picture=picture; return this;}
-        public Builder role(String role){this.role=role; return this;}
-        public user build() { return new user(this);
+        public Builder roles(List<String> roles) {
+            this.roles = roles;
+            return this;
+        }
+
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder isAccountNonExpired(boolean f) {
+            this.isAccountNonExpired = f;
+            return this;
+        }
+
+        public Builder isAccountNonLocked(boolean f) {
+            this.isAccountNonLocked = f;
+            return this;
+        }
+
+        public Builder isCredentialsNonExpired(boolean f) {
+            this.isCredentialsNonExpired = f;
+            return this;
+        }
+
+        public Builder isEnabled(boolean f) {
+            this.isEnabled = f;
+            return this;
+        }
+
+        public Builder firstname(String firstname) {
+            this.firstname = firstname;
+            return this;
+        }
+
+        public Builder lastname(String lastname) {
+            this.lastname = lastname;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder phone(List<String> phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Builder picture(String picture) {
+            this.picture = picture;
+            return this;
+        }
+
+        public Builder role(String role) {
+            this.role = role;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
 
         }
     }

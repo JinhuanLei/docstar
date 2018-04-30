@@ -1,7 +1,6 @@
 package com.lei.docstar.controllers;
 
-import com.lei.docstar.models.test;
-import com.lei.docstar.models.user;
+import com.lei.docstar.models.User;
 import com.lei.docstar.security.BadRequestException;
 import com.lei.docstar.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +21,19 @@ public class UserController {
 
 
     @RequestMapping(value = "/docstar/api/v1/{uid}", method = RequestMethod.GET)
-    public user getUserByID(@PathVariable String uid) {
+    public User getUserByID(@PathVariable String uid) {
         return userService.findById(uid);
     }
 
 
     @RequestMapping(value = "/docstar/api/v1/{uid}", method = RequestMethod.PUT)
-    public user updateUserByID(@PathVariable String uid ,@RequestBody user user) throws BadRequestException {
+    public User updateUserByID(@PathVariable String uid , @RequestBody User user) throws BadRequestException {
 
 
         return user;
-        //        System.out.println(user.get_id());
-//        if( user.get_id().equals(uid) ) {
-//            return userService.updateUser(user);
+        //        System.out.println(User.get_id());
+//        if( User.get_id().equals(uid) ) {
+//            return userService.updateUser(User);
 //        } else {
 //            throw new BadRequestException();
 //        }

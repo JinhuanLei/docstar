@@ -1,6 +1,6 @@
 package com.lei.docstar.services;
 
-import com.lei.docstar.models.user;
+import com.lei.docstar.models.User;
 import com.lei.docstar.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,9 +22,9 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        user user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
         if( user == null ) {
-            throw new UsernameNotFoundException("no such user");
+            throw new UsernameNotFoundException("no such User");
         } else {
             System.out.println( user.getUsername() );
             System.out.println( user.getPassword() );
@@ -32,15 +32,15 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public user findById(String tid) {
+    public User findById(String tid) {
         return userRepository.findById( tid ).get();
     }
 
-    public user createUser(user t) {
+    public User createUser(User t) {
         return userRepository.save(t);
     }
 
-    public user updateUser( user t ) {
+    public User updateUser(User t ) {
         return userRepository.save( t );
     }
 
@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService {
         this.userRepository.deleteAll();
         String hashedPassword = encoder.encode("123");
 
-        user tu = new user.Builder()
+        User tu = new User.Builder()
                 .roles( Arrays.asList( "USER", "ADMIN" ) )
                 .password( hashedPassword )
                 .username( "kenny" )
@@ -66,7 +66,7 @@ public class UserService implements UserDetailsService {
                 .build();
         userRepository.save( tu );
 
-        user tu2 = new user.Builder()
+        User tu2 = new User.Builder()
                 .roles( Arrays.asList( "USER" ) )
                 .password( hashedPassword )
                 .username( "hunt" )
