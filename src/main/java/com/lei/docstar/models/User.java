@@ -22,7 +22,7 @@ public class User implements UserDetails {
     private String lastname;
     private String password;
     private String email;
-    private String picture;
+    private String avatar;
     private List<String> phone;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
@@ -46,7 +46,7 @@ public class User implements UserDetails {
         this.firstname = b.firstname;
         this.lastname = b.lastname;
         this.email = b.email;
-        this.picture = b.picture;
+        this.avatar = b.avatar;
         this.phone = b.phone;
 
         this.roles = b.roles;
@@ -146,13 +146,7 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public String getPicture() {
-        return picture;
-    }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
 
     public List<String> getPhone() {
         return phone;
@@ -171,7 +165,7 @@ public class User implements UserDetails {
         private String lastname;
         private String password;
         private String email;
-        private String picture;
+        private String avatar;
         private List<String> phone;
         private String role;
         private boolean isAccountNonExpired;
@@ -235,8 +229,8 @@ public class User implements UserDetails {
             return this;
         }
 
-        public Builder picture(String picture) {
-            this.picture = picture;
+        public Builder avatar(String avatar) {
+            this.avatar = avatar;
             return this;
         }
 
