@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 @RestController
@@ -30,13 +31,26 @@ public class UserController {
 //    }
 
     @RequestMapping(value = "/docstar/api/v1/login", method = RequestMethod.POST)
-    public UserDetails Login(@RequestBody Test user) {
-        return userService.loadUserByUsername(user.getUsername());
+    public UserDetails Login(@RequestBody Test user, HttpSession session) {
+
+        UserDetails u=userService.loadUserByUsername(user.getUsername());
+        session.setAttribute("user",u);
+        return u;
     }
 
     @RequestMapping(value = "/docstar/api/v1/logout", method = RequestMethod.GET)
-    public ModelAndView Logout() {
+    public ModelAndView Logout(HttpSession session) {
+        session.invalidate();
         return new ModelAndView("index.html");
+    }
+    @RequestMapping(value = "/docstar/api/v1/user", method = RequestMethod.GET)
+    public UserDetails CheckUser(HttpSession session) throws BadRequestException {
+        UserDetails u=(UserDetails)session.getAttribute("user");
+        if(!u.getUsername().equals("")){
+            return u;
+        }else {
+            throw new BadRequestException();
+        }
     }
 
     @RequestMapping(value = "/docstar/api/v1/{uid}", method = RequestMethod.GET)

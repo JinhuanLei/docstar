@@ -22,19 +22,19 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
-    this.username = "hunt";
+    this.username = "kenny";
     this.password = "123";
-    // this.validateUser();
+    this.validateUser();
 
   }
   validateUser(){
     this.http.get<UserResponse>( "/docstar/api/v1/user").subscribe(
       data => {
         console.log(data);
-        if(data.role=="ADMIN"){
+        if(data.roles.length>1){
           this.router.navigateByUrl( 'adminpage');
-        }else{
-          this.router.navigateByUrl( 'gamelist');
+        }else if(data.roles.length==1&&data.roles[0]=="USER"){
+          this.router.navigateByUrl( 'userpage');
         }
       },
       error=>{
@@ -64,12 +64,12 @@ export class LoginComponent implements OnInit {
 
           this.userService.setUser( data );
           sessionStorage.setItem("user", JSON.stringify(data));
-          // if(data.role=="ADMIN"){
-          //   this.router.navigateByUrl( 'adminpage');
-          // }else{
-          //   this.router.navigateByUrl( 'gamelist');
-          // }
-          this.router.navigateByUrl( 'userpage');
+          if(data.roles.length>1){
+            this.router.navigateByUrl( 'adminpage');
+          }else if(data.roles.length==1&&data.roles[0]=="USER"){
+            this.router.navigateByUrl( 'userpage');
+          }
+
         },
         error=>{
           console.log(error);
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
 }
 
 interface UserResponse {
-  role: string;
+  roles: string[];
   headers:any;
 }
 

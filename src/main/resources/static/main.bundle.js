@@ -17,6 +17,148 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 
 /***/ }),
 
+/***/ "./src/app/adminpage/adminpage.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/adminpage/adminpage.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"page3\">\n  <nav class=\"navbar navbar-inverse\">\n    <div class=\"container-fluid\">\n      <!-- Brand and toggle get grouped for better mobile display -->\n\n\n      <!-- Collect the nav links, forms, and other content for toggling -->\n      <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n        <ul class=\"nav navbar-nav\">\n\n          <li class=\"dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Adminname<span class=\"caret\"></span></a>\n            <ul class=\"dropdown-menu\">\n              <li><a href=\"#\">Edit</a></li>\n            </ul>\n          </li>\n          <li><a href=\"#\">User</a></li>\n        </ul>\n        <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\" (click)=\"logout()\">Log Out</button>-->\n\n      </div>\n    </div>\n  </nav>\n  <br>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style=\"margin-top: 10px\">\n\n      <div class=\"col-md-4 col-md-offset-3\">\n        <label>Type</label>\n        <select class=\"form-control\" id=\"dtype\" name=\"dtype\"  [(ngModel)]=\"dtype\" (ngModelChange)=\"onTypeChange($event)\">\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <option value=\"\" disabled selected>Select your Type</option>\n          <option value=\"RULE\">rule</option>\n          <option value=\"PRORULE\">prorule</option>\n          <option value=\"NOTICE\">notice</option>\n          <option value=\"PRESDOCU\">presdocu</option>\n          <!--<option *ngFor=\"let list of levelslist\">{{list.name}}</option>-->\n        </select>\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Title</label>\n        <input type=\"text\" class=\"form-control\" id=\"title\" placeholder=\"Document Tile\" [(ngModel)]=\"title\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Zipcode</label>\n        <input type=\"text\" class=\"form-control\" id=\"zipcode\" placeholder=\"Zipcode\" [(ngModel)]=\"zipcode\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n        <input type=\"checkbox\" id=\"significance\"  (change)=\"toggleSignificance($event)\"> Significance\n        <input type=\"checkbox\" id=\"reviewed\"  (change)=\"toggleReviewed($event)\" style=\"margin-left: 20px\"> Reviewed\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n\n        <button type=\"submit\" (click)=\"searchDocument()\" class=\"btn btn-primary\">Search</button>\n        <button type=\"submit\" (click)=\"refreshTable()\" style=\"margin-left: 20px\" class=\"btn btn-primary\">Refresh</button>\n\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <table class=\"table table-bordered\" style=\"width:100%\" id=\"userList\" >\n      <thead>\n      <tr>\n        <th>First-name</th>\n        <th>Last-name</th>\n        <th>Email</th>\n        <th>Role</th>\n        <th>Enabled Status</th>\n      </tr>\n      </thead>\n      <tbody id=\"userTB\">\n      <tr *ngFor=\"let document of documents\" (click)=\"viewDocument($event)\" style=\"cursor: pointer;\" id={{user._id}}>\n        <td>{{user.name.first}}</td>\n      </tr>\n      </tbody>\n    </table>\n  </div>\n\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/adminpage/adminpage.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var user_service_service_1 = __webpack_require__("./src/app/user-service.service.ts");
+var AdminpageComponent = /** @class */ (function () {
+    function AdminpageComponent(http, router, userService) {
+        this.http = http;
+        this.router = router;
+        this.userService = userService;
+    }
+    AdminpageComponent.prototype.ngOnInit = function () {
+        this.validateUser();
+    };
+    AdminpageComponent.prototype.onTypeChange = function (value) {
+        this.selectedType = value;
+        console.log(this.selectedType);
+    };
+    AdminpageComponent.prototype.toggleSignificance = function (event) {
+        if (event.target.checked) {
+            this.significance = "1";
+        }
+        else {
+            this.significance = "0";
+        }
+    };
+    AdminpageComponent.prototype.toggleReviewed = function (event) {
+        if (event.target.checked) {
+            this.reviewed = true;
+        }
+        else {
+            this.reviewed = false;
+        }
+    };
+    AdminpageComponent.prototype.validateUser = function () {
+        var _this = this;
+        this.http.get("/docstar/api/v1/user").subscribe(function (data) {
+            console.log(data);
+            if (data.roles.length > 1) {
+                _this.router.navigateByUrl('adminpage');
+            }
+            else if (data.roles.length == 1 && data.roles[0] == "USER") {
+                _this.router.navigateByUrl('userpage');
+            }
+        }, function (error) {
+            _this.router.navigateByUrl('login');
+        });
+    };
+    AdminpageComponent.prototype.refreshTable = function () {
+        this.retrieveUsers();
+    };
+    AdminpageComponent.prototype.retrieveUsers = function () {
+        // this.filter='';
+        // this.http.get("/wordgame/api/admins/v3/users").subscribe(
+        //   data => {
+        //     console.log("users:"+data);
+        //     this.users = data;
+        //   }
+        // );
+    };
+    AdminpageComponent.prototype.searchDocument = function () {
+        // var search={"search":this.filter};
+        // console.log(search);
+        // this.http.post("/wordgame/api/admins/v3/search",search).subscribe(
+        //   data => {
+        //     console.log("users:"+data);
+        //     this.users = data;
+        //   }
+        // );
+        // this.filter = '';
+    };
+    AdminpageComponent.prototype.viewDocument = function (event) {
+        // if(event=="create"){
+        //   this.router.navigate(['createuser']);
+        // }else{
+        //   // console.log("row id:"+event.target)
+        //   var uid=event.currentTarget.id;
+        //
+        //   this.http.get( "/wordgame/api/admins/v3/"+uid,{} ).subscribe(
+        //     data => {
+        //       sessionStorage.setItem("check",JSON.stringify(data));
+        //       this.router.navigate(['useritem']);
+        //     }
+        //   )
+        //
+        // }
+    };
+    AdminpageComponent.prototype.logout = function () {
+        var _this = this;
+        // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
+        var LOGOUT_URL = "/docstar/api/v1/logout";
+        this.http.post(LOGOUT_URL, {}).subscribe(function (data) {
+            _this.router.navigate(['login']);
+        });
+    };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], AdminpageComponent.prototype, "documents", void 0);
+    AdminpageComponent = __decorate([
+        core_1.Component({
+            selector: 'app-adminpage',
+            template: __webpack_require__("./src/app/adminpage/adminpage.component.html"),
+            styles: [__webpack_require__("./src/app/adminpage/adminpage.component.css")]
+        }),
+        __metadata("design:paramtypes", [http_1.HttpClient, router_1.Router, user_service_service_1.UserServiceService])
+    ], AdminpageComponent);
+    return AdminpageComponent;
+}());
+exports.AdminpageComponent = AdminpageComponent;
+
+
+/***/ }),
+
 /***/ "./src/app/app.component.css":
 /***/ (function(module, exports) {
 
@@ -95,10 +237,14 @@ var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var user_service_service_1 = __webpack_require__("./src/app/user-service.service.ts");
 var userpage_component_1 = __webpack_require__("./src/app/userpage/userpage.component.ts");
+var userinfer_component_1 = __webpack_require__("./src/app/userinfer/userinfer.component.ts");
+var adminpage_component_1 = __webpack_require__("./src/app/adminpage/adminpage.component.ts");
 var routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: login_component_1.LoginComponent },
-    { path: 'userpage', component: userpage_component_1.UserpageComponent }
+    { path: 'userpage', component: userpage_component_1.UserpageComponent },
+    { path: 'userinfer', component: userinfer_component_1.UserinferComponent },
+    { path: 'adminpage', component: adminpage_component_1.AdminpageComponent }
 ];
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -108,7 +254,9 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 app_component_1.AppComponent,
                 login_component_1.LoginComponent,
-                userpage_component_1.UserpageComponent
+                userpage_component_1.UserpageComponent,
+                userinfer_component_1.UserinferComponent,
+                adminpage_component_1.AdminpageComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -173,19 +321,19 @@ var LoginComponent = /** @class */ (function () {
         this.invalid5 = 0;
     }
     LoginComponent.prototype.ngOnInit = function () {
-        this.username = "hunt";
+        this.username = "kenny";
         this.password = "123";
-        // this.validateUser();
+        this.validateUser();
     };
     LoginComponent.prototype.validateUser = function () {
         var _this = this;
         this.http.get("/docstar/api/v1/user").subscribe(function (data) {
             console.log(data);
-            if (data.role == "ADMIN") {
+            if (data.roles.length > 1) {
                 _this.router.navigateByUrl('adminpage');
             }
-            else {
-                _this.router.navigateByUrl('gamelist');
+            else if (data.roles.length == 1 && data.roles[0] == "USER") {
+                _this.router.navigateByUrl('userpage');
             }
         }, function (error) {
         });
@@ -202,12 +350,12 @@ var LoginComponent = /** @class */ (function () {
             console.log(data);
             _this.userService.setUser(data);
             sessionStorage.setItem("user", JSON.stringify(data));
-            // if(data.role=="ADMIN"){
-            //   this.router.navigateByUrl( 'adminpage');
-            // }else{
-            //   this.router.navigateByUrl( 'gamelist');
-            // }
-            _this.router.navigateByUrl('userpage');
+            if (data.roles.length > 1) {
+                _this.router.navigateByUrl('adminpage');
+            }
+            else if (data.roles.length == 1 && data.roles[0] == "USER") {
+                _this.router.navigateByUrl('userpage');
+            }
         }, function (error) {
             console.log(error);
             if (error.error == "Forbidden") {
@@ -286,6 +434,56 @@ exports.UserServiceService = UserServiceService;
 
 /***/ }),
 
+/***/ "./src/app/userinfer/userinfer.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/userinfer/userinfer.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  userinfer works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/userinfer/userinfer.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var UserinferComponent = /** @class */ (function () {
+    function UserinferComponent() {
+    }
+    UserinferComponent.prototype.ngOnInit = function () {
+    };
+    UserinferComponent = __decorate([
+        core_1.Component({
+            selector: 'app-userinfer',
+            template: __webpack_require__("./src/app/userinfer/userinfer.component.html"),
+            styles: [__webpack_require__("./src/app/userinfer/userinfer.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], UserinferComponent);
+    return UserinferComponent;
+}());
+exports.UserinferComponent = UserinferComponent;
+
+
+/***/ }),
+
 /***/ "./src/app/userpage/userpage.component.css":
 /***/ (function(module, exports) {
 
@@ -296,7 +494,7 @@ module.exports = ""
 /***/ "./src/app/userpage/userpage.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  userpage works!\n</p>\n"
+module.exports = "<label>userpage</label>\n"
 
 /***/ }),
 

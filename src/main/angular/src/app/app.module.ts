@@ -9,11 +9,15 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {UserServiceService} from "./user-service.service";
 import { UserpageComponent } from './userpage/userpage.component';
+import { UserinferComponent } from './userinfer/userinfer.component';
+import { AdminpageComponent } from './adminpage/adminpage.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent },
-  {path: 'userpage', component:  UserpageComponent }
+  {path: 'userpage', component:  UserpageComponent },
+  {path: 'userinfer', component:  UserinferComponent },
+  {path: 'adminpage', component:  AdminpageComponent }
 ]
 
 
@@ -21,7 +25,9 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    UserpageComponent
+    UserpageComponent,
+    UserinferComponent,
+    AdminpageComponent,
   ],
   imports: [
     BrowserModule,

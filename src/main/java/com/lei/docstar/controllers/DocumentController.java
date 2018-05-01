@@ -24,12 +24,12 @@ import java.net.URISyntaxException;
 @RestController
 public class DocumentController {
 
-    private String getDocuments() throws URISyntaxException, ClientProtocolException, IOException {
+    private String getDocuments(String query) throws URISyntaxException, ClientProtocolException, IOException {
 //        int id = (int)(Math.random() * 30 + 1 );
         URI uri = new URIBuilder()
                 .setScheme("https")
                 .setHost("www.federalregister.gov")
-                .setPath("/api/v1/articles.json")
+                .setPath("/api/v1/articles.json"+query)
                 .build();
         HttpGet httpget = new HttpGet(uri);
 
@@ -47,16 +47,16 @@ public class DocumentController {
     }
 
 
-    public Result toStarWars(String swapi ) throws JsonParseException, JsonMappingException, IOException {
+    public Result toDocumentsObj(String swapi ) throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper.readValue( swapi, Result.class );
     }
 
-    @RequestMapping(value="/fakeAsObject", method=RequestMethod.GET)
+    @RequestMapping(value="/documents", method=RequestMethod.GET)
     public Result fakeThingAsObject( ) throws ClientProtocolException, URISyntaxException, IOException {
-        String value = getDocuments();
-        return toStarWars( value );
+        String value = getDocuments("");
+        return toDocumentsObj( value );
     }
 
 }
