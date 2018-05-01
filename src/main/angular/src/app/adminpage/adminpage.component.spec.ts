@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminpageComponent } from './adminpage.component';
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 describe('AdminpageComponent', () => {
   let component: AdminpageComponent;
   let fixture: ComponentFixture<AdminpageComponent>;

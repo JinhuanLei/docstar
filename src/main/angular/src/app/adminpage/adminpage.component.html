@@ -1,3 +1,4 @@
+
 <div id="page3">
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -64,22 +65,77 @@
   </div>
 
   <div class="col-md-10 col-md-offset-1 well well-sm">
-    <table class="table table-bordered" style="width:100%" id="userList" >
-      <thead>
-      <tr>
-        <th>First-name</th>
-        <th>Last-name</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Enabled Status</th>
-      </tr>
-      </thead>
-      <tbody id="userTB">
-      <tr *ngFor="let document of documents" (click)="viewDocument($event)" style="cursor: pointer;" id={{user._id}}>
-        <td>{{user.name.first}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+
+    <!--<ngx-datatable-->
+      <!--class="bootstrap"-->
+      <!--[rows]="rows"-->
+      <!--[columns]="columns"-->
+      <!--[columnMode]="'force'"-->
+      <!--[headerHeight]="40"-->
+      <!--[footerHeight]="40"-->
+      <!--[limit]="10"-->
+      <!--[rowHeight]="'auto'">-->
+      <!--<ngx-datatable-column name="name" prop="name" editable="false" frozenLeft="True"></ngx-datatable-column>-->
+
+      <!--<ngx-datatable-column name="Selected" prop="" editable="true" frozenLeft="True">-->
+        <!--<ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row"-->
+                     <!--let-group="group">-->
+          <!--<input-->
+            <!--type="checkbox"-->
+            <!--id="ep1{{rowIndex}}"-->
+            <!--name="{{rowIndex}}"-->
+            <!--value="0"-->
+            <!--class="expectedpayment"-->
+            <!--(change)="checkGroup($event, row, rowIndex, group)"-->
+            <!--[checked]="">-->
+          <!--<label for="ep1{{rowIndex}}">Select</label>-->
+
+        <!--</ng-template>-->
+      <!--</ngx-datatable-column>-->
+
+      <!--</ngx-datatable>-->
+    <div style='float:left;width:90%'>
+      <ngx-datatable
+        style="width: 95%"
+        class="bootstrap"
+        [rows]="rows"
+        [columnMode]="'flex'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]="10"
+        [selected]="selected"
+        [selectionType]="'checkbox'"
+        [selectAllRowsOnPage]="false"
+        [displayCheck]="displayCheck"
+        (activate)="onActivate($event)"
+        (select)='onSelect($event)'>
+        <ngx-datatable-column
+          [width]="30"
+          [sortable]="false"
+          [canAutoResize]="false"
+          [draggable]="false"
+          [resizeable]="false"
+          [headerCheckboxable]="true"
+          [checkboxable]="true">
+        </ngx-datatable-column>
+        <ngx-datatable-column name="id" [flexGrow]="1"></ngx-datatable-column>
+        <ngx-datatable-column name="name" [flexGrow]="5"></ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+    <div class='selected-column' style="margin-left: 20px">
+      <h4>Selections <small>({{selected?.length}})</small></h4>
+      <ul>
+        <li *ngFor='let sel of selected'>
+          {{sel.id}}
+        </li>
+        <li *ngIf="!selected?.length">No Selections</li>
+      </ul>
+    </div>
+    </div>
+
+
 
 </div>
+
+

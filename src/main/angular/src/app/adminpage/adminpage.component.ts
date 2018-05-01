@@ -1,12 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {Router, RouterModule} from "@angular/router";
 import {UserServiceService} from "../user-service.service";
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @Component({
   selector: 'app-adminpage',
   templateUrl: './adminpage.component.html',
-  styleUrls: ['./adminpage.component.css']
+  styleUrls: ['./adminpage.component.css'],
+
+
 })
+
 export class AdminpageComponent implements OnInit {
 
   @Input() documents : any;
@@ -16,13 +20,48 @@ export class AdminpageComponent implements OnInit {
   selectedType:string;
   significance:string;
   reviewed:boolean;
-  constructor(private http : HttpClient, private router : Router, private userService : UserServiceService ) { }
+  rows = [
 
-
-  ngOnInit() {
-    this.validateUser();
+  ];
+  columns = [
+    { prop: 'name' }
+  ];
+  selected = [];
+  constructor(private http : HttpClient, private router : Router, private userService : UserServiceService ) {
 
   }
+  ngOnInit() {
+    this.validateUser();
+    this.loadDocuments();
+  }
+  displayCheck(row) {
+    return row.name !== 'Ethel Price';
+  }
+  onActivate(event) {
+    console.log('Activate Event', event);
+  }
+  onSelect({ selected }) {
+    console.log('Select Event', selected, this.selected);
+
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
+  }
+
+loadDocuments(){
+    this.http.get<UserResponse>("/documents").subscribe(
+      data=>{
+      this.documents=data.results;
+      var temparr=[];
+      for(var x=0;x<this.documents.length;x++){
+        var temp={"id":""+this.documents[x].document_number,"name":''+this.documents[x].title};
+        temparr.push(temp);
+      }
+      console.log(this.rows);
+      this.rows=temparr;
+    })
+}
+
+
 
   onTypeChange(value: any){
     this.selectedType=value;
@@ -96,6 +135,15 @@ export class AdminpageComponent implements OnInit {
     //   )
     //
     // }
+
+      var did=event.currentTarget.id;
+      this.http.get( "/documents/"+did,{} ).subscribe(
+        data => {
+          sessionStorage.setItem("check",JSON.stringify(data));
+          this.router.navigate(['documentitem']);
+        }
+      )
+
   }
   logout() {
     // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
@@ -116,4 +164,5 @@ export class AdminpageComponent implements OnInit {
 interface UserResponse {
   roles: string[];
   headers:any;
+  results:any;
 }
