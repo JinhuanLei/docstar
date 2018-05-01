@@ -136,7 +136,10 @@ var AdminpageComponent = /** @class */ (function () {
         var _this = this;
         // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
         var LOGOUT_URL = "/docstar/api/v1/logout";
-        this.http.post(LOGOUT_URL, {}).subscribe(function (data) {
+        this.http.post("/docstar/api/v1/logout", {}).subscribe(function (data) {
+            console.log(data);
+            _this.router.navigate(['login']);
+        }, function (error) {
             _this.router.navigate(['login']);
         });
     };
@@ -347,7 +350,7 @@ var LoginComponent = /** @class */ (function () {
         var head = new http_1.HttpHeaders({ 'Content-Type': 'application/json' });
         this.http.post(this.LOGIN_URL, credentials, { headers: head })
             .subscribe(function (data) {
-            console.log(data);
+            // console.log(data);
             _this.userService.setUser(data);
             sessionStorage.setItem("user", JSON.stringify(data));
             if (data.roles.length > 1) {

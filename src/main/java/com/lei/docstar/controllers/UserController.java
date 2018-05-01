@@ -38,15 +38,15 @@ public class UserController {
         return u;
     }
 
-    @RequestMapping(value = "/docstar/api/v1/logout", method = RequestMethod.GET)
-    public ModelAndView Logout(HttpSession session) {
+    @RequestMapping(value = "/docstar/api/v1/logout", method = RequestMethod.POST)
+    public String Logout(HttpSession session) {
         session.invalidate();
-        return new ModelAndView("index.html");
+        return "session destroy";
     }
     @RequestMapping(value = "/docstar/api/v1/user", method = RequestMethod.GET)
     public UserDetails CheckUser(HttpSession session) throws BadRequestException {
         UserDetails u=(UserDetails)session.getAttribute("user");
-        if(!u.getUsername().equals("")){
+        if(u!=null){
             return u;
         }else {
             throw new BadRequestException();

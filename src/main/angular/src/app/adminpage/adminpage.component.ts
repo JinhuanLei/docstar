@@ -100,8 +100,12 @@ export class AdminpageComponent implements OnInit {
   logout() {
     // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
     var LOGOUT_URL = "/docstar/api/v1/logout";
-    this.http.post( LOGOUT_URL, {} ).subscribe(
+    this.http.post("/docstar/api/v1/logout", {} ).subscribe(
       data => {
+        console.log(data);
+        this.router.navigate(['login']);
+      },
+      error => {
         this.router.navigate(['login']);
       }
     )
