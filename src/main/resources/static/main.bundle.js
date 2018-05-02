@@ -27,7 +27,7 @@ module.exports = "\n/*@import '~@swimlane/ngx-datatable/release/index.css';*/\n/
 /***/ "./src/app/adminpage/adminpage.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div id=\"page3\">\n  <nav class=\"navbar navbar-inverse\">\n    <div class=\"container-fluid\">\n      <!-- Brand and toggle get grouped for better mobile display -->\n\n\n      <!-- Collect the nav links, forms, and other content for toggling -->\n      <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n        <ul class=\"nav navbar-nav\">\n\n          <li class=\"dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Adminname<span class=\"caret\"></span></a>\n            <ul class=\"dropdown-menu\">\n              <li><a href=\"#\">Edit</a></li>\n            </ul>\n          </li>\n          <li><a href=\"#\">User</a></li>\n        </ul>\n        <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\" (click)=\"logout()\">Log Out</button>-->\n\n      </div>\n    </div>\n  </nav>\n  <br>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style=\"margin-top: 10px\">\n\n      <div class=\"col-md-4 col-md-offset-3\">\n        <label>Type</label>\n        <select class=\"form-control\" id=\"dtype\" name=\"dtype\"  [(ngModel)]=\"dtype\" (ngModelChange)=\"onTypeChange($event)\">\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <option value=\"\" disabled selected>Select your Type</option>\n          <option value=\"RULE\">rule</option>\n          <option value=\"PRORULE\">prorule</option>\n          <option value=\"NOTICE\">notice</option>\n          <option value=\"PRESDOCU\">presdocu</option>\n          <!--<option *ngFor=\"let list of levelslist\">{{list.name}}</option>-->\n        </select>\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Title</label>\n        <input type=\"text\" class=\"form-control\" id=\"title\" placeholder=\"Document Tile\" [(ngModel)]=\"title\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Zipcode</label>\n        <input type=\"text\" class=\"form-control\" id=\"zipcode\" placeholder=\"Zipcode\" [(ngModel)]=\"zipcode\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n        <input type=\"checkbox\" id=\"significance\"  (change)=\"toggleSignificance($event)\"> Significance\n        <input type=\"checkbox\" id=\"reviewed\"  (change)=\"toggleReviewed($event)\" style=\"margin-left: 20px\"> Reviewed\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n\n        <button type=\"submit\" (click)=\"searchDocument()\" class=\"btn btn-primary\">Search</button>\n        <button type=\"submit\" (click)=\"refreshTable()\" style=\"margin-left: 20px\" class=\"btn btn-primary\">Refresh</button>\n\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n\n    <!--<ngx-datatable-->\n      <!--class=\"bootstrap\"-->\n      <!--[rows]=\"rows\"-->\n      <!--[columns]=\"columns\"-->\n      <!--[columnMode]=\"'force'\"-->\n      <!--[headerHeight]=\"40\"-->\n      <!--[footerHeight]=\"40\"-->\n      <!--[limit]=\"10\"-->\n      <!--[rowHeight]=\"'auto'\">-->\n      <!--<ngx-datatable-column name=\"name\" prop=\"name\" editable=\"false\" frozenLeft=\"True\"></ngx-datatable-column>-->\n\n      <!--<ngx-datatable-column name=\"Selected\" prop=\"\" editable=\"true\" frozenLeft=\"True\">-->\n        <!--<ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\"-->\n                     <!--let-group=\"group\">-->\n          <!--<input-->\n            <!--type=\"checkbox\"-->\n            <!--id=\"ep1{{rowIndex}}\"-->\n            <!--name=\"{{rowIndex}}\"-->\n            <!--value=\"0\"-->\n            <!--class=\"expectedpayment\"-->\n            <!--(change)=\"checkGroup($event, row, rowIndex, group)\"-->\n            <!--[checked]=\"\">-->\n          <!--<label for=\"ep1{{rowIndex}}\">Select</label>-->\n\n        <!--</ng-template>-->\n      <!--</ngx-datatable-column>-->\n\n      <!--</ngx-datatable>-->\n    <div style='float:left;width:90%'>\n      <ngx-datatable\n        style=\"width: 95%\"\n        class=\"bootstrap\"\n        [rows]=\"rows\"\n        [columnMode]=\"'flex'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [limit]=\"10\"\n        [selected]=\"selected\"\n        [selectionType]=\"'checkbox'\"\n        [selectAllRowsOnPage]=\"false\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event)\"\n        (select)='onSelect($event)'>\n        <ngx-datatable-column\n          [width]=\"30\"\n          [sortable]=\"false\"\n          [canAutoResize]=\"false\"\n          [draggable]=\"false\"\n          [resizeable]=\"false\"\n          [headerCheckboxable]=\"true\"\n          [checkboxable]=\"true\">\n        </ngx-datatable-column>\n        <ngx-datatable-column name=\"id\" [flexGrow]=\"1\"></ngx-datatable-column>\n        <ngx-datatable-column name=\"name\" [flexGrow]=\"5\"></ngx-datatable-column>\n      </ngx-datatable>\n    </div>\n    <div class='selected-column' style=\"margin-left: 20px\">\n      <h4>Selections <small>({{selected?.length}})</small></h4>\n      <ul>\n        <li *ngFor='let sel of selected'>\n          {{sel.id}}\n        </li>\n        <li *ngIf=\"!selected?.length\">No Selections</li>\n      </ul>\n    </div>\n    </div>\n\n\n\n</div>\n\n\n"
+module.exports = "\n<div id=\"page3\">\n  <nav class=\"navbar navbar-inverse\">\n    <div class=\"container-fluid\">\n      <!-- Brand and toggle get grouped for better mobile display -->\n\n\n      <!-- Collect the nav links, forms, and other content for toggling -->\n      <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n        <ul class=\"nav navbar-nav\">\n\n          <!--<li class=\"dropdown\">-->\n            <!--<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Adminname<span class=\"caret\"></span></a>-->\n            <!--<ul class=\"dropdown-menu\">-->\n              <!--<li><a href=\"#\">Edit</a></li>-->\n            <!--</ul>-->\n          <!--</li>-->\n          <li><a>{{user.username}}</a></li>\n          <li><a href=\"#\">Admin</a></li>\n          <li><a href=\"#\">User</a></li>\n        </ul>\n        <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\" (click)=\"logout()\">Log Out</button>-->\n\n      </div>\n    </div>\n  </nav>\n  <br>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <a (click)=\"viewUserList()\">Manage Users</a>\n  </div>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style=\"margin-top: 10px\">\n\n      <div class=\"col-md-4 col-md-offset-3\">\n        <label>Type</label>\n        <select class=\"form-control\" id=\"dtype\" name=\"dtype\"  (ngModelChange)=\"onTypeChange($event)\">\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <option value=\"\" disabled selected>Select your Type</option>\n          <option value=\"RULE\">rule</option>\n          <option value=\"PRORULE\">prorule</option>\n          <option value=\"NOTICE\">notice</option>\n          <option value=\"PRESDOCU\">presdocu</option>\n          <!--<option *ngFor=\"let list of levelslist\">{{list.name}}</option>-->\n        </select>\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Title</label>\n        <input type=\"text\" class=\"form-control\" id=\"title\" placeholder=\"Document Tile\" [(ngModel)]=\"title\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Zipcode</label>\n        <input type=\"text\" class=\"form-control\" id=\"zipcode\" placeholder=\"Zipcode\" [(ngModel)]=\"zipcode\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n        <input type=\"checkbox\" id=\"significance\"  (change)=\"toggleSignificance($event)\"> Significance\n        <input type=\"checkbox\" id=\"reviewed\"  (change)=\"toggleReviewed($event)\" style=\"margin-left: 20px\"> Reviewed\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n\n        <button type=\"submit\" (click)=\"searchDocument()\" class=\"btn btn-primary\">Search</button>\n        <button type=\"submit\" (click)=\"refreshTable()\" style=\"margin-left: 20px\" class=\"btn btn-primary\">Refresh</button>\n\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n\n    <!--<ngx-datatable-->\n      <!--class=\"bootstrap\"-->\n      <!--[rows]=\"rows\"-->\n      <!--[columns]=\"columns\"-->\n      <!--[columnMode]=\"'force'\"-->\n      <!--[headerHeight]=\"40\"-->\n      <!--[footerHeight]=\"40\"-->\n      <!--[limit]=\"10\"-->\n      <!--[rowHeight]=\"'auto'\">-->\n      <!--<ngx-datatable-column name=\"name\" prop=\"name\" editable=\"false\" frozenLeft=\"True\"></ngx-datatable-column>-->\n\n      <!--<ngx-datatable-column name=\"Selected\" prop=\"\" editable=\"true\" frozenLeft=\"True\">-->\n        <!--<ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\"-->\n                     <!--let-group=\"group\">-->\n          <!--<input-->\n            <!--type=\"checkbox\"-->\n            <!--id=\"ep1{{rowIndex}}\"-->\n            <!--name=\"{{rowIndex}}\"-->\n            <!--value=\"0\"-->\n            <!--class=\"expectedpayment\"-->\n            <!--(change)=\"checkGroup($event, row, rowIndex, group)\"-->\n            <!--[checked]=\"\">-->\n          <!--<label for=\"ep1{{rowIndex}}\">Select</label>-->\n\n        <!--</ng-template>-->\n      <!--</ngx-datatable-column>-->\n\n      <!--</ngx-datatable>-->\n    <div style='float:left;width:90%'>\n      <ngx-datatable\n        style=\"width: 95%\"\n        class=\"bootstrap\"\n        [rows]=\"rows\"\n        [columnMode]=\"'flex'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [limit]=\"10\"\n        [selected]=\"selected\"\n        [selectionType]=\"'checkbox'\"\n        [selectAllRowsOnPage]=\"false\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event)\"\n        (select)='onSelect($event)'>\n        <ngx-datatable-column\n          [width]=\"30\"\n          [sortable]=\"false\"\n          [canAutoResize]=\"false\"\n          [draggable]=\"false\"\n          [resizeable]=\"false\"\n          [headerCheckboxable]=\"true\"\n          [checkboxable]=\"true\">\n        </ngx-datatable-column>\n        <ngx-datatable-column name=\"id\" [flexGrow]=\"1\"></ngx-datatable-column>\n        <ngx-datatable-column name=\"name\" [flexGrow]=\"5\"></ngx-datatable-column>\n      </ngx-datatable>\n    </div>\n    <div class='selected-column' style=\"margin-left: 20px\">\n      <h4>Selections <small>({{selected?.length}})</small></h4>\n      <ul>\n        <li *ngFor='let sel of selected'>\n          {{sel.id}}\n        </li>\n        <li *ngIf=\"!selected?.length\">No Selections</li>\n      </ul>\n    </div>\n    </div>\n\n\n\n</div>\n\n\n"
 
 /***/ }),
 
@@ -55,28 +55,16 @@ var AdminpageComponent = /** @class */ (function () {
         this.http = http;
         this.router = router;
         this.userService = userService;
+        this.user = { username: "" };
         this.rows = [];
         this.columns = [
             { prop: 'name' }
         ];
         this.selected = [];
+        this.validateUser();
     }
     AdminpageComponent.prototype.ngOnInit = function () {
-        this.validateUser();
         this.loadDocuments();
-    };
-    AdminpageComponent.prototype.displayCheck = function (row) {
-        return row.name !== 'Ethel Price';
-    };
-    AdminpageComponent.prototype.onActivate = function (event) {
-        console.log('Activate Event', event);
-    };
-    AdminpageComponent.prototype.onSelect = function (_a) {
-        var selected = _a.selected;
-        console.log('Select Event', selected, this.selected);
-        this.selected.splice(0, this.selected.length);
-        (_b = this.selected).push.apply(_b, selected);
-        var _b;
     };
     AdminpageComponent.prototype.loadDocuments = function () {
         var _this = this;
@@ -87,13 +75,13 @@ var AdminpageComponent = /** @class */ (function () {
                 var temp = { "id": "" + _this.documents[x].document_number, "name": '' + _this.documents[x].title };
                 temparr.push(temp);
             }
-            console.log(_this.rows);
+            // console.log(this.rows);
             _this.rows = temparr;
         });
     };
     AdminpageComponent.prototype.onTypeChange = function (value) {
-        this.selectedType = value;
-        console.log(this.selectedType);
+        this.dtype = value;
+        console.log(this.dtype);
     };
     AdminpageComponent.prototype.toggleSignificance = function (event) {
         if (event.target.checked) {
@@ -115,8 +103,9 @@ var AdminpageComponent = /** @class */ (function () {
         var _this = this;
         this.http.get("/docstar/api/v1/user").subscribe(function (data) {
             console.log(data);
+            _this.user = data;
             if (data.roles.length > 1) {
-                _this.router.navigateByUrl('adminpage');
+                // this.router.navigateByUrl( 'adminpage');
             }
             else if (data.roles.length == 1 && data.roles[0] == "USER") {
                 _this.router.navigateByUrl('userpage');
@@ -125,10 +114,21 @@ var AdminpageComponent = /** @class */ (function () {
             _this.router.navigateByUrl('login');
         });
     };
-    AdminpageComponent.prototype.refreshTable = function () {
-        this.retrieveUsers();
+    AdminpageComponent.prototype.logout = function () {
+        var _this = this;
+        // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
+        var LOGOUT_URL = "/docstar/api/v1/logout";
+        this.http.post("/docstar/api/v1/logout", {}).subscribe(function (data) {
+            console.log(data);
+            _this.router.navigate(['login']);
+        }, function (error) {
+            _this.router.navigate(['login']);
+        });
     };
-    AdminpageComponent.prototype.retrieveUsers = function () {
+    AdminpageComponent.prototype.refreshTable = function () {
+        this.retrieveDocuments();
+    };
+    AdminpageComponent.prototype.retrieveDocuments = function () {
         // this.filter='';
         // this.http.get("/wordgame/api/admins/v3/users").subscribe(
         //   data => {
@@ -170,16 +170,21 @@ var AdminpageComponent = /** @class */ (function () {
             _this.router.navigate(['documentitem']);
         });
     };
-    AdminpageComponent.prototype.logout = function () {
-        var _this = this;
-        // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
-        var LOGOUT_URL = "/docstar/api/v1/logout";
-        this.http.post("/docstar/api/v1/logout", {}).subscribe(function (data) {
-            console.log(data);
-            _this.router.navigate(['login']);
-        }, function (error) {
-            _this.router.navigate(['login']);
-        });
+    AdminpageComponent.prototype.displayCheck = function (row) {
+        return row.name !== 'Ethel Price';
+    };
+    AdminpageComponent.prototype.onActivate = function (event) {
+        // console.log('Activate Event', event);
+    };
+    AdminpageComponent.prototype.onSelect = function (_a) {
+        // console.log('Select Event', selected, this.selected);
+        var selected = _a.selected;
+        this.selected.splice(0, this.selected.length);
+        (_b = this.selected).push.apply(_b, selected);
+        var _b;
+    };
+    AdminpageComponent.prototype.viewUserList = function () {
+        this.router.navigate(['userlist']);
     };
     __decorate([
         core_1.Input(),
@@ -282,13 +287,15 @@ var userinfer_component_1 = __webpack_require__("./src/app/userinfer/userinfer.c
 var adminpage_component_1 = __webpack_require__("./src/app/adminpage/adminpage.component.ts");
 var documentitem_component_1 = __webpack_require__("./src/app/documentitem/documentitem.component.ts");
 var ngx_datatable_1 = __webpack_require__("./node_modules/@swimlane/ngx-datatable/release/index.js");
+var userlist_component_1 = __webpack_require__("./src/app/userlist/userlist.component.ts");
 var routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: login_component_1.LoginComponent },
     { path: 'userpage', component: userpage_component_1.UserpageComponent },
     { path: 'userinfer', component: userinfer_component_1.UserinferComponent },
     { path: 'adminpage', component: adminpage_component_1.AdminpageComponent },
-    { path: 'documentitem', component: documentitem_component_1.DocumentitemComponent }
+    { path: 'documentitem', component: documentitem_component_1.DocumentitemComponent },
+    { path: 'userlist', component: userlist_component_1.UserlistComponent }
 ];
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -302,6 +309,7 @@ var AppModule = /** @class */ (function () {
                 userinfer_component_1.UserinferComponent,
                 adminpage_component_1.AdminpageComponent,
                 documentitem_component_1.DocumentitemComponent,
+                userlist_component_1.UserlistComponent,
             ],
             imports: [
                 ngx_datatable_1.NgxDatatableModule,
@@ -576,6 +584,121 @@ var UserinferComponent = /** @class */ (function () {
     return UserinferComponent;
 }());
 exports.UserinferComponent = UserinferComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/userlist/userlist.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/userlist/userlist.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"page3\">\n  <nav class=\"navbar navbar-inverse\">\n    <p class=\"navbar-text\" style=\"margin-left: 30px\" id=\"adminEmail\">{{email}}</p>\n    <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\" (click)=\"logout()\">Log Out</button>\n  </nav>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <a onmouseover=\"\" style=\"cursor: pointer;\" (click)=\"viewUser('create')\">Create User</a>\n  </div>\n  <br>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <table class=\"table table-bordered\" style=\"width:100%\" id=\"userList\" >\n      <thead>\n      <tr>\n        <th>First-name</th>\n        <th>Last-name</th>\n        <th>Email</th>\n        <th>Role</th>\n        <th>Enabled Status</th>\n      </tr>\n      </thead>\n      <tbody id=\"userTB\">\n      <tr *ngFor=\"let user of users\" (click)=\"viewUser($event)\" style=\"cursor: pointer;\" id={{user._id}}>\n        <td>{{user.firstname}}</td>\n        <td>{{user.lastname}}</td>\n        <td>{{user.email}}</td>\n        <td><label *ngFor=\"let a of user.roles\" [ngStyle]=\"{'margin-left':'10px'}\">{{a}}</label></td>\n        <td>{{user.enabled}}</td>\n      </tr>\n      </tbody>\n    </table>\n  </div>\n\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/userlist/userlist.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var user_service_service_1 = __webpack_require__("./src/app/user-service.service.ts");
+var UserlistComponent = /** @class */ (function () {
+    function UserlistComponent(http, router, userService) {
+        this.http = http;
+        this.router = router;
+        this.userService = userService;
+    }
+    UserlistComponent.prototype.ngOnInit = function () {
+        this.validateUser();
+        this.retrieveUsers();
+    };
+    UserlistComponent.prototype.validateUser = function () {
+        var _this = this;
+        this.http.get("/docstar/api/v1/user").subscribe(function (data) {
+            _this.suser = data;
+            console.log(data);
+            if (data.roles.length > 1) {
+                // this.router.navigateByUrl( 'adminpage');
+            }
+            else if (data.roles.length == 1 && data.roles[0] == "USER") {
+                _this.router.navigateByUrl('userpage');
+            }
+        }, function (error) {
+            _this.router.navigateByUrl('login');
+        });
+    };
+    UserlistComponent.prototype.logout = function () {
+        var _this = this;
+        // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
+        var LOGOUT_URL = "/docstar/api/v1/logout";
+        this.http.post("/docstar/api/v1/logout", {}).subscribe(function (data) {
+            console.log(data);
+            _this.router.navigate(['login']);
+        }, function (error) {
+            _this.router.navigate(['login']);
+        });
+    };
+    UserlistComponent.prototype.retrieveUsers = function () {
+        var _this = this;
+        this.filter = '';
+        this.http.get("/docstar/api/v1/users").subscribe(function (data) {
+            console.log("users:" + data);
+            _this.users = data;
+        });
+    };
+    UserlistComponent.prototype.refreshTable = function () {
+        this.retrieveUsers();
+    };
+    UserlistComponent.prototype.viewUser = function (event) {
+        // if(event=="create"){
+        //   this.router.navigate(['createuser']);
+        // }else{
+        //   // console.log("row id:"+event.target)
+        //   var uid=event.currentTarget.id;
+        //
+        //   this.http.get( "/wordgame/api/admins/v3/"+uid,{} ).subscribe(
+        //     data => {
+        //       sessionStorage.setItem("check",JSON.stringify(data));
+        //       this.router.navigate(['useritem']);
+        //     }
+        //   )
+        //
+        // }
+    };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], UserlistComponent.prototype, "users", void 0);
+    UserlistComponent = __decorate([
+        core_1.Component({
+            selector: 'app-userlist',
+            template: __webpack_require__("./src/app/userlist/userlist.component.html"),
+            styles: [__webpack_require__("./src/app/userlist/userlist.component.css")]
+        }),
+        __metadata("design:paramtypes", [http_1.HttpClient, router_1.Router, user_service_service_1.UserServiceService])
+    ], UserlistComponent);
+    return UserlistComponent;
+}());
+exports.UserlistComponent = UserlistComponent;
 
 
 /***/ }),

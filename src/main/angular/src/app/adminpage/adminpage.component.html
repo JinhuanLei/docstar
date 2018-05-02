@@ -10,12 +10,14 @@
 
         <ul class="nav navbar-nav">
 
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Adminname<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Edit</a></li>
-            </ul>
-          </li>
+          <!--<li class="dropdown">-->
+            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Adminname<span class="caret"></span></a>-->
+            <!--<ul class="dropdown-menu">-->
+              <!--<li><a href="#">Edit</a></li>-->
+            <!--</ul>-->
+          <!--</li>-->
+          <li><a>{{user.username}}</a></li>
+          <li><a href="#">Admin</a></li>
           <li><a href="#">User</a></li>
         </ul>
         <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 20px" (click)="logout()">Log Out</button>-->
@@ -25,11 +27,14 @@
   </nav>
   <br>
   <div class="col-md-10 col-md-offset-1 well well-sm">
+    <a (click)="viewUserList()">Manage Users</a>
+  </div>
+  <div class="col-md-10 col-md-offset-1 well well-sm">
     <div style="margin-top: 10px">
 
       <div class="col-md-4 col-md-offset-3">
         <label>Type</label>
-        <select class="form-control" id="dtype" name="dtype"  [(ngModel)]="dtype" (ngModelChange)="onTypeChange($event)">
+        <select class="form-control" id="dtype" name="dtype"  (ngModelChange)="onTypeChange($event)">
           <!--<option value={{font.category}}>{{font.category}}</option>-->
           <!--<option value={{font.category}}>{{font.category}}</option>-->
           <option value="" disabled selected>Select your Type</option>

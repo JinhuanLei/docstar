@@ -17,9 +17,9 @@ export class AdminpageComponent implements OnInit {
   title:string;
   zipcode:string;
   dtype:string;
-  selectedType:string;
   significance:string;
   reviewed:boolean;
+  user:any={username:""};
   rows = [
 
   ];
@@ -28,24 +28,13 @@ export class AdminpageComponent implements OnInit {
   ];
   selected = [];
   constructor(private http : HttpClient, private router : Router, private userService : UserServiceService ) {
-
+    this.validateUser();
   }
   ngOnInit() {
-    this.validateUser();
+
     this.loadDocuments();
   }
-  displayCheck(row) {
-    return row.name !== 'Ethel Price';
-  }
-  onActivate(event) {
-    console.log('Activate Event', event);
-  }
-  onSelect({ selected }) {
-    console.log('Select Event', selected, this.selected);
 
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
-  }
 
 loadDocuments(){
     this.http.get<UserResponse>("/documents").subscribe(
@@ -56,7 +45,7 @@ loadDocuments(){
         var temp={"id":""+this.documents[x].document_number,"name":''+this.documents[x].title};
         temparr.push(temp);
       }
-      console.log(this.rows);
+      // console.log(this.rows);
       this.rows=temparr;
     })
 }
@@ -64,8 +53,8 @@ loadDocuments(){
 
 
   onTypeChange(value: any){
-    this.selectedType=value;
-    console.log(this.selectedType);
+    this.dtype=value;
+    console.log(this.dtype);
   }
 
   toggleSignificance(event){
@@ -86,8 +75,9 @@ loadDocuments(){
     this.http.get<UserResponse>( "/docstar/api/v1/user").subscribe(
       data => {
         console.log(data);
+        this.user=data;
         if(data.roles.length>1){
-          this.router.navigateByUrl( 'adminpage');
+          // this.router.navigateByUrl( 'adminpage');
         }else if(data.roles.length==1&&data.roles[0]=="USER"){
           this.router.navigateByUrl( 'userpage');
         }
@@ -97,10 +87,23 @@ loadDocuments(){
       }
     )
   }
-  refreshTable(){
-    this.retrieveUsers();
+  logout() {
+    // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
+    var LOGOUT_URL = "/docstar/api/v1/logout";
+    this.http.post("/docstar/api/v1/logout", {} ).subscribe(
+      data => {
+        console.log(data);
+        this.router.navigate(['login']);
+      },
+      error => {
+        this.router.navigate(['login']);
+      }
+    )
   }
-  retrieveUsers(){
+  refreshTable(){
+    this.retrieveDocuments();
+  }
+  retrieveDocuments(){
     // this.filter='';
     // this.http.get("/wordgame/api/admins/v3/users").subscribe(
     //   data => {
@@ -145,21 +148,23 @@ loadDocuments(){
       )
 
   }
-  logout() {
-    // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
-    var LOGOUT_URL = "/docstar/api/v1/logout";
-    this.http.post("/docstar/api/v1/logout", {} ).subscribe(
-      data => {
-        console.log(data);
-        this.router.navigate(['login']);
-      },
-      error => {
-        this.router.navigate(['login']);
-      }
-    )
+
+  displayCheck(row) {
+    return row.name !== 'Ethel Price';
+  }
+  onActivate(event) {
+    // console.log('Activate Event', event);
+  }
+  onSelect({ selected }) {
+    // console.log('Select Event', selected, this.selected);
+
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
   }
 
-
+  viewUserList(){
+    this.router.navigate(['userlist']);
+  }
 }
 interface UserResponse {
   roles: string[];

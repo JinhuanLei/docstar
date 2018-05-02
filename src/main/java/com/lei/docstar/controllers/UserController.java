@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -52,7 +53,11 @@ public class UserController {
             throw new BadRequestException();
         }
     }
-
+    @RequestMapping(value = "/docstar/api/v1/users", method = RequestMethod.GET)
+    public List<User> getUserByID()
+    {
+        return userService.findAll();
+    }
     @RequestMapping(value = "/docstar/api/v1/{uid}", method = RequestMethod.GET)
     public User getUserByID(@PathVariable String uid) {
         return userService.findById(uid);

@@ -1,0 +1,33 @@
+<div id="page3">
+  <nav class="navbar navbar-inverse">
+    <p class="navbar-text" style="margin-left: 30px" id="adminEmail">{{email}}</p>
+    <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 20px" (click)="logout()">Log Out</button>
+  </nav>
+  <div class="col-md-10 col-md-offset-1 well well-sm">
+    <a onmouseover="" style="cursor: pointer;" (click)="viewUser('create')">Create User</a>
+  </div>
+  <br>
+  <div class="col-md-10 col-md-offset-1 well well-sm">
+    <table class="table table-bordered" style="width:100%" id="userList" >
+      <thead>
+      <tr>
+        <th>First-name</th>
+        <th>Last-name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Enabled Status</th>
+      </tr>
+      </thead>
+      <tbody id="userTB">
+      <tr *ngFor="let user of users" (click)="viewUser($event)" style="cursor: pointer;" id={{user._id}}>
+        <td>{{user.firstname}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.email}}</td>
+        <td><label *ngFor="let a of user.roles" [ngStyle]="{'margin-left':'10px'}">{{a}}</label></td>
+        <td>{{user.enabled}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

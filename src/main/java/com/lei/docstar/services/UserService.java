@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -31,7 +32,9 @@ public class UserService implements UserDetailsService {
             return user;
         }
     }
-
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
     public User findById(String tid) {
         return userRepository.findById( tid ).get();
     }

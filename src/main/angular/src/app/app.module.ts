@@ -11,6 +11,7 @@ import { UserinferComponent } from './userinfer/userinfer.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { DocumentitemComponent } from './documentitem/documentitem.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { UserlistComponent } from './userlist/userlist.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'userpage', component:  UserpageComponent },
   {path: 'userinfer', component:  UserinferComponent },
   {path: 'adminpage', component:  AdminpageComponent },
-  {path: 'documentitem', component:DocumentitemComponent}
+  {path: 'documentitem', component:DocumentitemComponent},
+  {path: 'userlist', component: UserlistComponent}
 ]
 
 
@@ -31,6 +33,7 @@ const routes: Routes = [
     UserinferComponent,
     AdminpageComponent,
     DocumentitemComponent,
+    UserlistComponent,
   ],
   imports: [
     NgxDatatableModule,
