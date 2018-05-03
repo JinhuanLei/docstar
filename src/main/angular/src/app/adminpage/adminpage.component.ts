@@ -34,7 +34,37 @@ export class AdminpageComponent implements OnInit {
 
     this.loadDocuments();
   }
+  validateUser(){
+    this.http.get<UserResponse>( "/docstar/api/v1/user").subscribe(
+      data => {
+        console.log(data);
+        this.user=data;
+        if(data.roles.length>1){
+          // this.router.navigateByUrl( 'adminpage');
+        }else if(data.roles.length==1&&data.roles[0]=="USER"){
+          this.router.navigateByUrl( 'userpage');
+        }
+      },
+      error=>{
+        this.router.navigateByUrl( 'login');
+      }
+    )
+  }
 
+
+  logout() {
+    // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
+    var LOGOUT_URL = "/docstar/api/v1/logout";
+    this.http.post("/docstar/api/v1/logout", {} ).subscribe(
+      data => {
+        console.log(data);
+        this.router.navigate(['login']);
+      },
+      error => {
+        this.router.navigate(['login']);
+      }
+    )
+  }
 
 loadDocuments(){
     this.http.get<UserResponse>("/documents").subscribe(
@@ -71,35 +101,7 @@ loadDocuments(){
       this.reviewed=false;
     }
   }
-  validateUser(){
-    this.http.get<UserResponse>( "/docstar/api/v1/user").subscribe(
-      data => {
-        console.log(data);
-        this.user=data;
-        if(data.roles.length>1){
-          // this.router.navigateByUrl( 'adminpage');
-        }else if(data.roles.length==1&&data.roles[0]=="USER"){
-          this.router.navigateByUrl( 'userpage');
-        }
-      },
-      error=>{
-        this.router.navigateByUrl( 'login');
-      }
-    )
-  }
-  logout() {
-    // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
-    var LOGOUT_URL = "/docstar/api/v1/logout";
-    this.http.post("/docstar/api/v1/logout", {} ).subscribe(
-      data => {
-        console.log(data);
-        this.router.navigate(['login']);
-      },
-      error => {
-        this.router.navigate(['login']);
-      }
-    )
-  }
+
   refreshTable(){
     this.retrieveDocuments();
   }

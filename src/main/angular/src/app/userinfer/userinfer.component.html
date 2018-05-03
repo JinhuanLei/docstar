@@ -1,3 +1,63 @@
-<p>
-  userinfer works!
-</p>
+<div id="page4"  >
+  <nav class="navbar navbar-inverse">
+    <p class="navbar-text" style="margin-left: 30px" id="page4UserID">{{user.username}}</p>
+    <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 20px" (click)="logout()">Log Out</button>
+  </nav>
+  <div class="col-md-10 col-md-offset-1">
+    <div class="form-group col-md-4 col-md-offset-3" style="display: none">
+      <input type="text" class="form-control" id="userID" [(ngModel)]="user._id">
+    </div>
+    <div class="form-group col-md-4 col-md-offset-3">
+      <label for="avatar">Avatar</label>
+      <input type="file" id="avatar">
+    </div>
+    <div class="form-group col-md-4 col-md-offset-3">
+      <label for="fname">First Name</label>
+      <input type="text" class="form-control" id="fname" [(ngModel)]="user.firstname">
+    </div>
+    <div class="form-group col-md-4 col-md-offset-3">
+      <label for="lname">Last Name</label>
+      <input type="text" class="form-control" id="lname" [(ngModel)]="user.lastname">
+    </div>
+    <div class="form-group col-md-4 col-md-offset-3">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" placeholder="jane.doe@example.com" [(ngModel)]="user.email">
+    </div>
+    <div class="form-group col-md-4 col-md-offset-3">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" [(ngModel)]="user.password">
+    </div>
+    <div class="form-group col-md-4 col-md-offset-3">
+      <label>Rule</label><br>
+      <label class="checkbox-inline">
+        <input type="checkbox" name="radio" id="admin" value="option1" [disabled]="disableType" [checked]="user.roles.length == 2" (change)="toggleAdmin($event)"> ADMIN
+      </label>
+      <!--<label class="radio-inline">-->
+      <!--<input type="checkbox" name="radio" id="user" value="option2" [disabled]="disableType" [checked]="user.roles.length == 1" (change)="toggleUser($event)"> USER-->
+      <!--</label>-->
+    </div>
+    <div class="form-group col-md-4 col-md-offset-3">
+      <label>Enabled</label><br>
+      <div class="checkbox">
+        <label>
+          <!--<input type="checkbox" id="enabled" [checked]="user.enabled == 'Enabled'" [(ngModel)]="user.enabled"> Enabled-->
+          <input type="checkbox" id="enabled" [checked]="user.enabled==true" [disabled]="disableEnabled" (change)="toggleEnabled($event)"> Enabled
+
+        </label>
+      </div>
+    </div>
+    <div class="form-group col-md-9 col-md-offset-3">
+      <button type="submit" class="btn btn-default col-md-1" (click)="backToMainPage()">Back</button>
+      <button type="submit" class="btn btn-default col-md-1 col-md-offset-1"  id="update" (click)="updateUser()">Update</button>
+    </div>
+    <div class="form-group col-md-9 col-md-offset-3" *ngIf="invalid3===1" >
+      <label style="color: #873920;" id="invalid3"  >Incompelete form</label>
+    </div>
+    <div class="form-group col-md-9 col-md-offset-3" *ngIf="invalid4===1">
+      <label style="color: #873920;" id="invalid4"  >Invalid format of email!</label>
+    </div>
+  </div>
+
+
+
+</div>

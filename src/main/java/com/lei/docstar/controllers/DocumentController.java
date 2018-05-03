@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 public class DocumentController {
@@ -31,7 +32,9 @@ public class DocumentController {
         URI uri = new URIBuilder()
                 .setScheme("https")
                 .setHost("www.federalregister.gov")
-                .setPath(path+query)
+//                .setPath(path+query)
+                .setPath(path)
+                .setCustomQuery(query)
                 .build();
         HttpGet httpget = new HttpGet(uri);
 
@@ -63,8 +66,25 @@ public class DocumentController {
 
     @RequestMapping(value="/documents", method=RequestMethod.GET)
     public Result LoadDocuments( ) throws ClientProtocolException, URISyntaxException, IOException {
-        String value = getDocuments("/api/v1/articles.json","");
-        return toDocumentsObj( value );
+//        Result result=null;
+//        for(int x=1;x<50;x++){
+//            String value = getDocuments("/api/v1/documents.json","?page="+x);
+//            Result tempR=toDocumentsObj( value );
+//            if(x==1){
+//                 result.setResults(tempR.getResults());
+//            }else{
+//                List<Document> tempD=result.getResults();
+//                tempD.addAll(tempR.getResults());
+//                result.setResults(tempD);
+//            }
+//
+//        }
+//return result;
+
+        String value = getDocuments("/api/v1/documents.json","per_page=1000");
+        System.out.println(value);
+
+      return toDocumentsObj( value );
     }
 
     @RequestMapping(value="/documents/{did}", method=RequestMethod.GET)

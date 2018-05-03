@@ -7,8 +7,16 @@ public class Result {
     private String description;
     private int total_pages;
     private String next_page_url;
+    private String previous_page_url;
     private List<Document> results;
 
+    public String getPrevious_page_url() {
+        return previous_page_url;
+    }
+
+    public void setPrevious_page_url(String previous_page_url) {
+        this.previous_page_url = previous_page_url;
+    }
 
     public int getCount() {
         return count;
