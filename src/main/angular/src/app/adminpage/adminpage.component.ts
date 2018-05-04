@@ -50,8 +50,13 @@ export class AdminpageComponent implements OnInit {
       }
     )
   }
-
-
+  timeout: any;
+  onPage(event) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      console.log('paged!', event);
+    }, 100);
+  }
   logout() {
     // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
     var LOGOUT_URL = "/docstar/api/v1/logout";
@@ -65,7 +70,9 @@ export class AdminpageComponent implements OnInit {
       }
     )
   }
-
+  getRowHeight(row) {
+    return row.height;
+  }
 loadDocuments(){
     this.http.get<UserResponse>("/documents").subscribe(
       data=>{

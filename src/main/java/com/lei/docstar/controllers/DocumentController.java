@@ -82,7 +82,7 @@ public class DocumentController {
 //return result;
 
         String value = getDocuments("/api/v1/documents.json","per_page=1000");
-        System.out.println(value);
+//        System.out.println(value);
 
       return toDocumentsObj( value );
     }

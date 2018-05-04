@@ -30,6 +30,18 @@ public class User implements UserDetails {
     private boolean isEnabled;
     private List<String> roles;
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
     public List<String> getRoles() {
         return roles;
     }

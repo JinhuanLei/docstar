@@ -6,7 +6,10 @@ import com.lei.docstar.security.BadRequestException;
 import com.lei.docstar.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.security.config.authentication.PasswordEncoderParser;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +23,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
         return new ModelAndView("index.html");
@@ -30,13 +34,21 @@ public class UserController {
 ////        System.out.println(username);
 //        return userService.loadUserByUsername(username);
 //    }
+    @Autowired
+PasswordEncoder encoder;
 
     @RequestMapping(value = "/docstar/api/v1/login", method = RequestMethod.POST)
-    public UserDetails Login(@RequestBody Test user, HttpSession session) {
+    public UserDetails Login(@RequestBody User user, HttpSession session) throws BadRequestException {
+
 
         UserDetails u=userService.loadUserByUsername(user.getUsername());
-        session.setAttribute("user",u);
-        return u;
+        if(encoder.matches(user.getPassword(), u.getPassword())){
+            session.setAttribute("user",u);
+            return u;
+        }else {
+            throw new BadRequestException();
+        }
+
     }
 
     @RequestMapping(value = "/docstar/api/v1/logout", method = RequestMethod.POST)
@@ -71,16 +83,18 @@ public class UserController {
     }
 
     @RequestMapping(value = "/docstar/api/v1/{uid}", method = RequestMethod.PUT)
-    public User updateUserByID(@PathVariable String uid , @RequestBody User user) throws BadRequestException {
+    public User updateUserByID(HttpSession session,@PathVariable String uid , @RequestBody User user) throws BadRequestException {
 
 
-        return user;
-        //        System.out.println(User.get_id());
-//        if( User.get_id().equals(uid) ) {
-//            return userService.updateUser(User);
-//        } else {
-//            throw new BadRequestException();
-//        }
+//        return user;
+
+        if( user.get_id().equals(uid) ) {
+            User newuser=userService.updateUser(user);
+                    session.setAttribute("user",newuser);
+            return newuser;
+        } else {
+            throw new BadRequestException();
+        }
 
     }
 

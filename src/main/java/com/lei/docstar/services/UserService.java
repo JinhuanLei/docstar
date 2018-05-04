@@ -44,6 +44,9 @@ public class UserService implements UserDetailsService {
     }
 
     public User updateUser(User t ) {
+        String password=t.getPassword();
+        String hashedPassword = encoder.encode(password);
+        t.setPassword(hashedPassword);
         return userRepository.save( t );
     }
 
