@@ -29,6 +29,16 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
     private List<String> roles;
+    private List<String> lists;
+
+
+    public List<String> getLists() {
+        return lists;
+    }
+
+    public void setLists(List<String> lists) {
+        this.lists = lists;
+    }
 
     public String getAvatar() {
         return avatar;
