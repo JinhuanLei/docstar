@@ -68,18 +68,18 @@ this.retrieveUsers();
     // if(event=="create"){
     //   this.router.navigate(['createuser']);
     // }else{
-    //   // console.log("row id:"+event.target)
-    //   var uid=event.currentTarget.id;
-    //
-    //   this.http.get( "/wordgame/api/admins/v3/"+uid,{} ).subscribe(
-    //     data => {
-    //       sessionStorage.setItem("check",JSON.stringify(data));
-    //       this.router.navigate(['useritem']);
-    //     }
-    //   )
-    //
-    // }
-  }
+      // console.log("row id:"+event.target)
+      var uid=event.currentTarget.id;
+
+      this.http.get( "/docstar/api/v1/"+uid,{} ).subscribe(
+        data => {
+          sessionStorage.setItem("check",JSON.stringify(data));
+          this.router.navigate(['userinfer']);
+        }
+      )
+
+    }
+  // }
 
 
 }

@@ -13,18 +13,30 @@ export class UserinferComponent implements OnInit {
     this.validateUser();
   }
   user:any={_id:"",password:"",email:"",roles:[""]};
-  disableType:any=false;
-  disableEnabled:any=false;
+  disableCondition:any=false;
   invalid3:any=0;
   invalid4:any=0;
+  CurrentUser:any;
+  checkMode:any=false;
   ngOnInit() {
-
+    this.checkMode=false;
+    if(sessionStorage.getItem("check")){
+      this.checkMode=true;
+      var objstr=sessionStorage.getItem("check");
+      var obj=JSON.parse(objstr);
+      this.user=obj;
+      if(this.CurrentUser._id==this.user._id){
+        this.disableCondition=true;
+      }
+      console.log(this.user);
+      sessionStorage.removeItem("check");
+    }
   }
   validateUser(){
     this.http.get<UserResponse>( "/docstar/api/v1/user").subscribe(
       data => {
-        // console.log(data);
-        this.user=data;
+
+        this.CurrentUser=data;
         if(data.roles.length>1){
           // this.router.navigateByUrl( 'adminpage');
         }else if(data.roles.length==1&&data.roles[0]=="USER"){
@@ -52,7 +64,11 @@ export class UserinferComponent implements OnInit {
 
 
   backToMainPage(){
-    this.router.navigate(['adminpage']);
+    if(this.checkMode){
+      this.router.navigate(['userlist']);
+    }else{
+      this.router.navigate(['adminpage']);
+    }
   }
 
   updateUser(){

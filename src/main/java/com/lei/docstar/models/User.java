@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private String avatar;
-    private List<String> phone;
+    private String phone;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
@@ -170,11 +170,11 @@ public class User implements UserDetails {
 
 
 
-    public List<String> getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(List<String> phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -188,7 +188,7 @@ public class User implements UserDetails {
         private String password;
         private String email;
         private String avatar;
-        private List<String> phone;
+        private String phone;
         private String role;
         private boolean isAccountNonExpired;
         private boolean isAccountNonLocked;
@@ -246,7 +246,7 @@ public class User implements UserDetails {
             return this;
         }
 
-        public Builder phone(List<String> phone) {
+        public Builder phone(String phone) {
             this.phone = phone;
             return this;
         }

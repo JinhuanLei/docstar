@@ -27,7 +27,7 @@ export class AdminpageComponent implements OnInit {
     {prop: 'name'}
   ];
   selected = [];
-
+  ducumentList:any=[{_id:""}];
   constructor(private http: HttpClient, private router: Router, private userService: UserServiceService) {
     this.validateUser();
   }
@@ -76,9 +76,11 @@ export class AdminpageComponent implements OnInit {
 
   }
 
+
   loadLists() {
     this.http.get<UserResponse>("/docstar/api/v1/list").subscribe(
       data => {
+        this.ducumentList=data;
         var tempArr=[];
         for(var x=0;x<data.length;x++){
           var temp={"id":""+data[x]._id}
@@ -89,7 +91,16 @@ export class AdminpageComponent implements OnInit {
       }
     )
   }
+  viewUser(){
+    var uid=this.user._id;
+    this.http.get( "/docstar/api/v1/"+uid,{} ).subscribe(
+      data => {
+        sessionStorage.setItem("check",JSON.stringify(data));
+        this.router.navigate(['userinfer']);
+      }
+    )
 
+  }
   loadDocuments() {
     this.http.get<UserResponse>("/documents").subscribe(
       data => {
@@ -195,6 +206,10 @@ export class AdminpageComponent implements OnInit {
 
   viewUserList() {
     this.router.navigate(['userlist']);
+  }
+
+  onListChange(event){
+
   }
 }
 

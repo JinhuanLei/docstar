@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./src/app/adminpage/adminpage.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"page3\">\n  <nav class=\"navbar navbar-inverse\">\n    <div class=\"container-fluid\">\n      <!-- Brand and toggle get grouped for better mobile display -->\n\n\n      <!-- Collect the nav links, forms, and other content for toggling -->\n      <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n        <ul class=\"nav navbar-nav\">\n\n          <li class=\"dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\"\n               aria-expanded=\"false\">{{user.username}}<span class=\"caret\"></span></a>\n            <ul class=\"dropdown-menu\">\n              <li><a routerLink=\"/userinfer\">Edit</a></li>\n            </ul>\n          </li>\n          <li><a href=\"/adminpage\">Admin</a></li>\n          <li><a href=\"/userpage\">User</a></li>\n        </ul>\n        <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\"\n                (click)=\"logout()\">Log Out\n        </button>\n        -->\n\n      </div>\n    </div>\n  </nav>\n  <br>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <a (click)=\"viewUserList()\" style=\"cursor: pointer;\">Manage Users</a>\n  </div>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style=\"margin-top: 10px\">\n\n      <div class=\"col-md-4 col-md-offset-3\">\n        <label>Type</label>\n        <select class=\"form-control\" id=\"dtype\" name=\"dtype\" (ngModelChange)=\"onTypeChange($event)\">\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <option value=\"\" disabled selected>Select your Type</option>\n          <option value=\"RULE\">rule</option>\n          <option value=\"PRORULE\">prorule</option>\n          <option value=\"NOTICE\">notice</option>\n          <option value=\"PRESDOCU\">presdocu</option>\n          <!--<option *ngFor=\"let list of levelslist\">{{list.name}}</option>-->\n        </select>\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Title</label>\n        <input type=\"text\" class=\"form-control\" id=\"title\" placeholder=\"Document Tile\" [(ngModel)]=\"title\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Zipcode</label>\n        <input type=\"text\" class=\"form-control\" id=\"zipcode\" placeholder=\"Zipcode\" [(ngModel)]=\"zipcode\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n        <input type=\"checkbox\" id=\"significance\" (change)=\"toggleSignificance($event)\"> Significance\n        <input type=\"checkbox\" id=\"reviewed\" (change)=\"toggleReviewed($event)\" style=\"margin-left: 20px\"> Reviewed\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n\n        <button type=\"submit\" (click)=\"searchDocument()\" class=\"btn btn-primary\">Search</button>\n        <button type=\"submit\" (click)=\"refreshTable()\" style=\"margin-left: 20px\" class=\"btn btn-primary\">Refresh\n        </button>\n\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n\n\n    <div style='float:left;width:90%'>\n      <ngx-datatable\n        style=\"width: 95%\"\n        class=\"bootstrap\"\n        [rows]=\"rows\"\n        [columnMode]=\"'flex'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [limit]=\"10\"\n        [selected]=\"selected\"\n        [selectionType]=\"'checkbox'\"\n        [selectAllRowsOnPage]=\"false\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event)\"\n        (select)='onSelect($event)'>\n        <ngx-datatable-column\n          [width]=\"30\"\n          [sortable]=\"false\"\n          [canAutoResize]=\"false\"\n          [draggable]=\"false\"\n          [resizeable]=\"false\"\n          [headerCheckboxable]=\"true\"\n          [checkboxable]=\"true\">\n        </ngx-datatable-column>\n        <ngx-datatable-column name=\"id\" [flexGrow]=\"1\"></ngx-datatable-column>\n        <ngx-datatable-column name=\"name\" [flexGrow]=\"5\"></ngx-datatable-column>\n\n      </ngx-datatable>\n    </div>\n    <div class='selected-column' style=\"margin-left: 20px\">\n      <h4>Selections\n        <small>({{selected?.length}})</small>\n      </h4>\n      <ul>\n        <li *ngFor='let sel of selected'>\n          {{sel.id}}\n        </li>\n        <li *ngIf=\"!selected?.length\">No Selections</li>\n      </ul>\n      <button type=\"submit\" (click)=\"createLists()\" class=\"btn btn-primary\">Create Lists</button>\n    </div>\n  </div>\n\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style='float:left;width:90%'>\n      <label>Document Lists</label>\n    <ngx-datatable\n      class=\"bootstrap\"\n      [rows]=\"listrows\"\n      [columnMode]=\"'force'\"\n      [headerHeight]=\"50\"\n      [rowHeight]=\"'auto'\">\n      <ngx-datatable-column name=\"id\"></ngx-datatable-column>\n    </ngx-datatable>\n    </div>\n  </div>\n\n\n</div>\n\n\n"
+module.exports = "<div id=\"page3\">\n  <nav class=\"navbar navbar-inverse\">\n    <div class=\"container-fluid\">\n      <!-- Brand and toggle get grouped for better mobile display -->\n\n\n      <!-- Collect the nav links, forms, and other content for toggling -->\n      <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n        <ul class=\"nav navbar-nav\">\n\n          <li class=\"dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\"\n               aria-expanded=\"false\">{{user.username}}<span class=\"caret\"></span></a>\n            <ul class=\"dropdown-menu\">\n              <li><a (click)=\"viewUser()\">Edit</a></li>\n            </ul>\n          </li>\n          <li><a href=\"/adminpage\">Admin</a></li>\n          <li><a href=\"/userpage\">User</a></li>\n        </ul>\n        <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\"\n                (click)=\"logout()\">Log Out\n        </button>\n        -->\n\n      </div>\n    </div>\n  </nav>\n  <br>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <a (click)=\"viewUserList()\" style=\"cursor: pointer;\">Manage Users</a>\n  </div>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style=\"margin-top: 10px\">\n\n      <div class=\"col-md-4 col-md-offset-3\">\n        <label>Type</label>\n        <select class=\"form-control\" id=\"dtype\" name=\"dtype\" (ngModelChange)=\"onTypeChange($event)\">\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <option value=\"\" disabled selected>Select your Type</option>\n          <option value=\"RULE\">rule</option>\n          <option value=\"PRORULE\">prorule</option>\n          <option value=\"NOTICE\">notice</option>\n          <option value=\"PRESDOCU\">presdocu</option>\n          <!--<option *ngFor=\"let list of levelslist\">{{list.name}}</option>-->\n        </select>\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Title</label>\n        <input type=\"text\" class=\"form-control\" id=\"title\" placeholder=\"Document Tile\" [(ngModel)]=\"title\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Zipcode</label>\n        <input type=\"text\" class=\"form-control\" id=\"zipcode\" placeholder=\"Zipcode\" [(ngModel)]=\"zipcode\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n        <input type=\"checkbox\" id=\"significance\" (change)=\"toggleSignificance($event)\"> Significance\n        <input type=\"checkbox\" id=\"reviewed\" (change)=\"toggleReviewed($event)\" style=\"margin-left: 20px\"> Reviewed\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n\n        <button type=\"submit\" (click)=\"searchDocument()\" class=\"btn btn-primary\">Search</button>\n        <button type=\"submit\" (click)=\"refreshTable()\" style=\"margin-left: 20px\" class=\"btn btn-primary\">Refresh\n        </button>\n\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n\n\n    <div style='float:left;width:90%'>\n      <ngx-datatable\n        style=\"width: 95%\"\n        class=\"bootstrap\"\n        [rows]=\"rows\"\n        [columnMode]=\"'flex'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [limit]=\"10\"\n        [selected]=\"selected\"\n        [selectionType]=\"'checkbox'\"\n        [selectAllRowsOnPage]=\"false\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event)\"\n        (select)='onSelect($event)'>\n        <ngx-datatable-column\n          [width]=\"30\"\n          [sortable]=\"false\"\n          [canAutoResize]=\"false\"\n          [draggable]=\"false\"\n          [resizeable]=\"false\"\n          [headerCheckboxable]=\"true\"\n          [checkboxable]=\"true\">\n        </ngx-datatable-column>\n        <ngx-datatable-column name=\"id\" [flexGrow]=\"1\"></ngx-datatable-column>\n        <ngx-datatable-column name=\"name\" [flexGrow]=\"5\"></ngx-datatable-column>\n\n      </ngx-datatable>\n    </div>\n    <div class='selected-column' style=\"margin-left: 20px\">\n      <h4>Selections\n        <small>({{selected?.length}})</small>\n      </h4>\n      <ul>\n        <li *ngFor='let sel of selected'>\n          {{sel.id}}\n        </li>\n        <li *ngIf=\"!selected?.length\">No Selections</li>\n      </ul>\n      <label>Choose List</label>\n      <select id=\"listId\" (ngModelChange)=\"onListChange($event)\" style=\"width: 10%;margin-top: 10px \">\n        <option value=\"Create New\">Create New</option>\n        <option *ngFor=\"let list of ducumentList\" [ngValue]=\"list._id\">{{list._id}}</option>\n      </select>\n      <button type=\"submit\" (click)=\"createLists()\" class=\"btn btn-primary\" style=\"margin-top: 10px\">Create Lists</button>\n    </div>\n  </div>\n\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style='float:left;width:90%'>\n      <label>Document Lists</label>\n    <ngx-datatable\n      class=\"bootstrap\"\n      [rows]=\"listrows\"\n      [columnMode]=\"'force'\"\n      [rowHeight]=\"'auto'\">\n      <ngx-datatable-column name=\"id\"></ngx-datatable-column>\n    </ngx-datatable>\n    </div>\n  </div>\n\n\n</div>\n\n\n"
 
 /***/ }),
 
@@ -61,6 +61,7 @@ var AdminpageComponent = /** @class */ (function () {
             { prop: 'name' }
         ];
         this.selected = [];
+        this.ducumentList = [{ _id: "" }];
         this.validateUser();
     }
     AdminpageComponent.prototype.ngOnInit = function () {
@@ -101,6 +102,7 @@ var AdminpageComponent = /** @class */ (function () {
     AdminpageComponent.prototype.loadLists = function () {
         var _this = this;
         this.http.get("/docstar/api/v1/list").subscribe(function (data) {
+            _this.ducumentList = data;
             var tempArr = [];
             for (var x = 0; x < data.length; x++) {
                 var temp = { "id": "" + data[x]._id };
@@ -108,6 +110,14 @@ var AdminpageComponent = /** @class */ (function () {
             }
             _this.listrows = tempArr;
             console.log(_this.listrows);
+        });
+    };
+    AdminpageComponent.prototype.viewUser = function () {
+        var _this = this;
+        var uid = this.user._id;
+        this.http.get("/docstar/api/v1/" + uid, {}).subscribe(function (data) {
+            sessionStorage.setItem("check", JSON.stringify(data));
+            _this.router.navigate(['userinfer']);
         });
     };
     AdminpageComponent.prototype.loadDocuments = function () {
@@ -203,6 +213,8 @@ var AdminpageComponent = /** @class */ (function () {
     };
     AdminpageComponent.prototype.viewUserList = function () {
         this.router.navigate(['userlist']);
+    };
+    AdminpageComponent.prototype.onListChange = function (event) {
     };
     __decorate([
         core_1.Input(),
@@ -566,7 +578,7 @@ module.exports = ""
 /***/ "./src/app/userinfer/userinfer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"page4\"  >\n  <nav class=\"navbar navbar-inverse\">\n    <p class=\"navbar-text\" style=\"margin-left: 30px\" id=\"page4UserID\">{{user.username}}</p>\n    <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\" (click)=\"logout()\">Log Out</button>\n  </nav>\n  <div class=\"col-md-10 col-md-offset-1\">\n    <div class=\"form-group col-md-4 col-md-offset-3\" style=\"display: none\">\n      <input type=\"text\" class=\"form-control\" id=\"userID\" [(ngModel)]=\"user._id\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"avatar\">Avatar</label>\n      <input type=\"file\" id=\"avatar\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"fname\">First Name</label>\n      <input type=\"text\" class=\"form-control\" id=\"fname\" [(ngModel)]=\"user.firstname\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"lname\">Last Name</label>\n      <input type=\"text\" class=\"form-control\" id=\"lname\" [(ngModel)]=\"user.lastname\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"email\">Email</label>\n      <input type=\"email\" class=\"form-control\" id=\"email\" placeholder=\"jane.doe@example.com\" [(ngModel)]=\"user.email\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" id=\"password\" [(ngModel)]=\"user.password\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label>Rule</label><br>\n      <label class=\"checkbox-inline\">\n        <input type=\"checkbox\" name=\"radio\" id=\"admin\" value=\"option1\" [disabled]=\"disableType\" [checked]=\"user.roles.length == 2\" (change)=\"toggleAdmin($event)\"> ADMIN\n      </label>\n      <!--<label class=\"radio-inline\">-->\n      <!--<input type=\"checkbox\" name=\"radio\" id=\"user\" value=\"option2\" [disabled]=\"disableType\" [checked]=\"user.roles.length == 1\" (change)=\"toggleUser($event)\"> USER-->\n      <!--</label>-->\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label>Enabled</label><br>\n      <div class=\"checkbox\">\n        <label>\n          <!--<input type=\"checkbox\" id=\"enabled\" [checked]=\"user.enabled == 'Enabled'\" [(ngModel)]=\"user.enabled\"> Enabled-->\n          <input type=\"checkbox\" id=\"enabled\" [checked]=\"user.enabled==true\" [disabled]=\"disableEnabled\" (change)=\"toggleEnabled($event)\"> Enabled\n\n        </label>\n      </div>\n    </div>\n    <div class=\"form-group col-md-9 col-md-offset-3\">\n      <button type=\"submit\" class=\"btn btn-default col-md-1\" (click)=\"backToMainPage()\">Back</button>\n      <button type=\"submit\" class=\"btn btn-default col-md-1 col-md-offset-1\"  id=\"update\" (click)=\"updateUser()\">Update</button>\n    </div>\n    <div class=\"form-group col-md-9 col-md-offset-3\" *ngIf=\"invalid3===1\" >\n      <label style=\"color: #873920;\" id=\"invalid3\"  >Incompelete form</label>\n    </div>\n    <div class=\"form-group col-md-9 col-md-offset-3\" *ngIf=\"invalid4===1\">\n      <label style=\"color: #873920;\" id=\"invalid4\"  >Invalid format of email!</label>\n    </div>\n  </div>\n\n\n\n</div>\n"
+module.exports = "<div id=\"page4\"  >\n  <nav class=\"navbar navbar-inverse\">\n    <p class=\"navbar-text\" style=\"margin-left: 30px\" id=\"page4UserID\">{{user.username}}</p>\n    <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\" (click)=\"logout()\">Log Out</button>\n  </nav>\n  <div class=\"col-md-10 col-md-offset-1\">\n    <div class=\"form-group col-md-4 col-md-offset-3\" style=\"display: none\">\n      <input type=\"text\" class=\"form-control\" id=\"userID\" [(ngModel)]=\"user._id\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"avatar\">Avatar</label>\n      <input type=\"file\" id=\"avatar\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"fname\">First Name</label>\n      <input type=\"text\" class=\"form-control\" id=\"fname\" [(ngModel)]=\"user.firstname\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"lname\">Last Name</label>\n      <input type=\"text\" class=\"form-control\" id=\"lname\" [(ngModel)]=\"user.lastname\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"email\">Email</label>\n      <input type=\"email\" class=\"form-control\" id=\"email\" placeholder=\"jane.doe@example.com\" [(ngModel)]=\"user.email\">\n    </div>\n\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"phone\">Phone</label>\n      <input type=\"text\" class=\"form-control\" id=\"phone\" [(ngModel)]=\"user.phone\">\n    </div>\n\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" id=\"password\" [(ngModel)]=\"user.password\">\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label>Rule</label><br>\n      <label class=\"checkbox-inline\">\n        <input type=\"checkbox\" name=\"radio\" id=\"admin\" value=\"option1\" [disabled]=\"disableCondition\" [checked]=\"user.roles.length == 2\" (change)=\"toggleAdmin($event)\"> ADMIN\n      </label>\n      <!--<label class=\"radio-inline\">-->\n      <!--<input type=\"checkbox\" name=\"radio\" id=\"user\" value=\"option2\" [disabled]=\"disableType\" [checked]=\"user.roles.length == 1\" (change)=\"toggleUser($event)\"> USER-->\n      <!--</label>-->\n    </div>\n    <div class=\"form-group col-md-4 col-md-offset-3\">\n      <label>Enabled</label><br>\n      <div class=\"checkbox\">\n        <label>\n          <!--<input type=\"checkbox\" id=\"enabled\" [checked]=\"user.enabled == 'Enabled'\" [(ngModel)]=\"user.enabled\"> Enabled-->\n          <input type=\"checkbox\" id=\"enabled\" [checked]=\"user.enabled==true\" [disabled]=\"disableCondition\" (change)=\"toggleEnabled($event)\"> Enabled\n\n        </label>\n      </div>\n    </div>\n    <div class=\"form-group col-md-9 col-md-offset-3\">\n      <button type=\"submit\" class=\"btn btn-default col-md-1\" (click)=\"backToMainPage()\">Back</button>\n      <button type=\"submit\" class=\"btn btn-default col-md-1 col-md-offset-1\"  id=\"update\" (click)=\"updateUser()\">Update</button>\n    </div>\n    <div class=\"form-group col-md-9 col-md-offset-3\" *ngIf=\"invalid3===1\" >\n      <label style=\"color: #873920;\" id=\"invalid3\"  >Incompelete form</label>\n    </div>\n    <div class=\"form-group col-md-9 col-md-offset-3\" *ngIf=\"invalid4===1\">\n      <label style=\"color: #873920;\" id=\"invalid4\"  >Invalid format of email!</label>\n    </div>\n  </div>\n\n\n\n</div>\n"
 
 /***/ }),
 
@@ -595,19 +607,30 @@ var UserinferComponent = /** @class */ (function () {
         this.router = router;
         this.userService = userService;
         this.user = { _id: "", password: "", email: "", roles: [""] };
-        this.disableType = false;
-        this.disableEnabled = false;
+        this.disableCondition = false;
         this.invalid3 = 0;
         this.invalid4 = 0;
+        this.checkMode = false;
         this.validateUser();
     }
     UserinferComponent.prototype.ngOnInit = function () {
+        this.checkMode = false;
+        if (sessionStorage.getItem("check")) {
+            this.checkMode = true;
+            var objstr = sessionStorage.getItem("check");
+            var obj = JSON.parse(objstr);
+            this.user = obj;
+            if (this.CurrentUser._id == this.user._id) {
+                this.disableCondition = true;
+            }
+            console.log(this.user);
+            sessionStorage.removeItem("check");
+        }
     };
     UserinferComponent.prototype.validateUser = function () {
         var _this = this;
         this.http.get("/docstar/api/v1/user").subscribe(function (data) {
-            // console.log(data);
-            _this.user = data;
+            _this.CurrentUser = data;
             if (data.roles.length > 1) {
                 // this.router.navigateByUrl( 'adminpage');
             }
@@ -630,7 +653,12 @@ var UserinferComponent = /** @class */ (function () {
         });
     };
     UserinferComponent.prototype.backToMainPage = function () {
-        this.router.navigate(['adminpage']);
+        if (this.checkMode) {
+            this.router.navigate(['userlist']);
+        }
+        else {
+            this.router.navigate(['adminpage']);
+        }
     };
     UserinferComponent.prototype.updateUser = function () {
         var _this = this;
@@ -763,20 +791,16 @@ var UserlistComponent = /** @class */ (function () {
         this.retrieveUsers();
     };
     UserlistComponent.prototype.viewUser = function (event) {
+        var _this = this;
         // if(event=="create"){
         //   this.router.navigate(['createuser']);
         // }else{
-        //   // console.log("row id:"+event.target)
-        //   var uid=event.currentTarget.id;
-        //
-        //   this.http.get( "/wordgame/api/admins/v3/"+uid,{} ).subscribe(
-        //     data => {
-        //       sessionStorage.setItem("check",JSON.stringify(data));
-        //       this.router.navigate(['useritem']);
-        //     }
-        //   )
-        //
-        // }
+        // console.log("row id:"+event.target)
+        var uid = event.currentTarget.id;
+        this.http.get("/docstar/api/v1/" + uid, {}).subscribe(function (data) {
+            sessionStorage.setItem("check", JSON.stringify(data));
+            _this.router.navigate(['userinfer']);
+        });
     };
     __decorate([
         core_1.Input(),
