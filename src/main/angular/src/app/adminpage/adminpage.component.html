@@ -1,4 +1,3 @@
-
 <div id="page3">
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -11,7 +10,8 @@
         <ul class="nav navbar-nav">
 
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.username}}<span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">{{user.username}}<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a routerLink="/userinfer">Edit</a></li>
             </ul>
@@ -19,7 +19,10 @@
           <li><a href="/adminpage">Admin</a></li>
           <li><a href="/userpage">User</a></li>
         </ul>
-        <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 20px" (click)="logout()">Log Out</button>-->
+        <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 20px"
+                (click)="logout()">Log Out
+        </button>
+        -->
 
       </div>
     </div>
@@ -33,7 +36,7 @@
 
       <div class="col-md-4 col-md-offset-3">
         <label>Type</label>
-        <select class="form-control" id="dtype" name="dtype"  (ngModelChange)="onTypeChange($event)">
+        <select class="form-control" id="dtype" name="dtype" (ngModelChange)="onTypeChange($event)">
           <!--<option value={{font.category}}>{{font.category}}</option>-->
           <!--<option value={{font.category}}>{{font.category}}</option>-->
           <option value="" disabled selected>Select your Type</option>
@@ -54,14 +57,15 @@
         <input type="text" class="form-control" id="zipcode" placeholder="Zipcode" [(ngModel)]="zipcode">
       </div>
       <div class="form-group col-md-4 col-md-offset-3">
-        <input type="checkbox" id="significance"  (change)="toggleSignificance($event)"> Significance
-        <input type="checkbox" id="reviewed"  (change)="toggleReviewed($event)" style="margin-left: 20px"> Reviewed
+        <input type="checkbox" id="significance" (change)="toggleSignificance($event)"> Significance
+        <input type="checkbox" id="reviewed" (change)="toggleReviewed($event)" style="margin-left: 20px"> Reviewed
 
       </div>
       <div class="form-group col-md-4 col-md-offset-3">
 
         <button type="submit" (click)="searchDocument()" class="btn btn-primary">Search</button>
-        <button type="submit" (click)="refreshTable()" style="margin-left: 20px" class="btn btn-primary">Refresh</button>
+        <button type="submit" (click)="refreshTable()" style="margin-left: 20px" class="btn btn-primary">Refresh
+        </button>
 
       </div>
 
@@ -102,7 +106,9 @@
       </ngx-datatable>
     </div>
     <div class='selected-column' style="margin-left: 20px">
-      <h4>Selections <small>({{selected?.length}})</small></h4>
+      <h4>Selections
+        <small>({{selected?.length}})</small>
+      </h4>
       <ul>
         <li *ngFor='let sel of selected'>
           {{sel.id}}
@@ -111,18 +117,21 @@
       </ul>
       <button type="submit" (click)="createLists()" class="btn btn-primary">Create Lists</button>
     </div>
-    </div>
+  </div>
 
 
   <div class="col-md-10 col-md-offset-1 well well-sm">
+    <div style='float:left;width:90%'>
+      <label>Document Lists</label>
     <ngx-datatable
       class="bootstrap"
       [rows]="listrows"
+      [columnMode]="'force'"
       [headerHeight]="50"
-      [footerHeight]="50"
       [rowHeight]="'auto'">
       <ngx-datatable-column name="id"></ngx-datatable-column>
     </ngx-datatable>
+    </div>
   </div>
 
 

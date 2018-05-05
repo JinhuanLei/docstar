@@ -1,8 +1,11 @@
 package com.lei.docstar.models;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.List;
 
 public class DocumentList {
+
     private String _id;
     private List<Document> documents;
 

@@ -19,10 +19,6 @@ public class DocumentListService {
         return documentListRepository.findAll();
     }
 
-    public DocumentList createList(DocumentList d){
-        return documentListRepository.save(d);
-    }
-
     public DocumentList createLists(DocumentList d) {
         return documentListRepository.save(d);
     }

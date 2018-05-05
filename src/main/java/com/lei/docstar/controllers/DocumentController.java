@@ -27,7 +27,7 @@ import java.util.List;
 @RestController
 public class DocumentController {
 
-    private String getDocuments(String path,String query) throws URISyntaxException, ClientProtocolException, IOException {
+    private String getDocuments(String path, String query) throws URISyntaxException, ClientProtocolException, IOException {
 //        int id = (int)(Math.random() * 30 + 1 );
         URI uri = new URIBuilder()
                 .setScheme("https")
@@ -39,12 +39,12 @@ public class DocumentController {
         HttpGet httpget = new HttpGet(uri);
 
         CloseableHttpClient client = HttpClients.createDefault();
-        CloseableHttpResponse response = client.execute( httpget );
+        CloseableHttpResponse response = client.execute(httpget);
 
         String result = null;
         try {
             HttpEntity e = response.getEntity();
-            result = EntityUtils.toString( e );
+            result = EntityUtils.toString(e);
         } finally {
             response.close();
         }
@@ -52,20 +52,20 @@ public class DocumentController {
     }
 
 
-    public Result toDocumentsObj(String swapi ) throws JsonParseException, JsonMappingException, IOException {
+    public Result toDocumentsObj(String swapi) throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper.readValue( swapi, Result.class );
+        return mapper.readValue(swapi, Result.class);
     }
 
-    public Document toDocumentObj(String swapi ) throws JsonParseException, JsonMappingException, IOException {
+    public Document toDocumentObj(String swapi) throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper.readValue( swapi, Document.class );
+        return mapper.readValue(swapi, Document.class);
     }
 
-    @RequestMapping(value="/documents", method=RequestMethod.GET)
-    public Result LoadDocuments( ) throws ClientProtocolException, URISyntaxException, IOException {
+    @RequestMapping(value = "/documents", method = RequestMethod.GET)
+    public Result LoadDocuments() throws ClientProtocolException, URISyntaxException, IOException {
 //        Result result=null;
 //        for(int x=1;x<50;x++){
 //            String value = getDocuments("/api/v1/documents.json","?page="+x);
@@ -81,15 +81,15 @@ public class DocumentController {
 //        }
 //return result;
 
-        String value = getDocuments("/api/v1/documents.json","per_page=1000");
+        String value = getDocuments("/api/v1/documents.json", "per_page=1000");
 //        System.out.println(value);
 
-      return toDocumentsObj( value );
+        return toDocumentsObj(value);
     }
 
-    @RequestMapping(value="/documents/{did}", method=RequestMethod.GET)
+    @RequestMapping(value = "/documents/{did}", method = RequestMethod.GET)
     public Document findDocumentByDocumentNumber(@PathVariable String did) throws IOException, URISyntaxException {
-        String value=getDocuments("/api/v1/documents/"+did+".json","");
+        String value = getDocuments("/api/v1/documents/" + did + ".json", "");
         return toDocumentObj(value);
     }
 

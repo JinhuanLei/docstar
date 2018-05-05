@@ -2,7 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {Router, RouterModule} from "@angular/router";
 import {UserServiceService} from "../user-service.service";
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+
 @Component({
   selector: 'app-adminpage',
   templateUrl: './adminpage.component.html',
@@ -13,41 +14,42 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 export class AdminpageComponent implements OnInit {
 
-  @Input() documents : any;
-  title:string;
-  zipcode:string;
-  dtype:string;
-  significance:string;
-  reviewed:boolean;
-  listrows:any;
-  user:any={username:""};
-  rows = [
-
-  ];
+  @Input() documents: any;
+  title: string;
+  zipcode: string;
+  dtype: string;
+  significance: string;
+  reviewed: boolean;
+  listrows: any;
+  user: any = {username: ""};
+  rows = [];
   columns = [
-    { prop: 'name' }
+    {prop: 'name'}
   ];
   selected = [];
-  constructor(private http : HttpClient, private router : Router, private userService : UserServiceService ) {
+
+  constructor(private http: HttpClient, private router: Router, private userService: UserServiceService) {
     this.validateUser();
   }
+
   ngOnInit() {
     this.loadDocuments();
     this.loadLists();
   }
-  validateUser(){
-    this.http.get<UserResponse>( "/docstar/api/v1/user").subscribe(
+
+  validateUser() {
+    this.http.get<UserResponse>("/docstar/api/v1/user").subscribe(
       data => {
         console.log(data);
-        this.user=data;
-        if(data.roles.length>1){
+        this.user = data;
+        if (data.roles.length > 1) {
           // this.router.navigateByUrl( 'adminpage');
-        }else if(data.roles.length==1&&data.roles[0]=="USER"){
-          this.router.navigateByUrl( 'userpage');
+        } else if (data.roles.length == 1 && data.roles[0] == "USER") {
+          this.router.navigateByUrl('userpage');
         }
       },
-      error=>{
-        this.router.navigateByUrl( 'login');
+      error => {
+        this.router.navigateByUrl('login');
       }
     )
   }
@@ -55,7 +57,7 @@ export class AdminpageComponent implements OnInit {
   logout() {
     // var LOGOUT_URL = "http://localhost:3000/wordgame/api/logout/v3";
     var LOGOUT_URL = "/docstar/api/v1/logout";
-    this.http.post("/docstar/api/v1/logout", {} ).subscribe(
+    this.http.post("/docstar/api/v1/logout", {}).subscribe(
       data => {
         console.log(data);
         this.router.navigate(['login']);
@@ -65,58 +67,70 @@ export class AdminpageComponent implements OnInit {
       }
     )
   }
+
   getRowHeight(row) {
     return row.height;
   }
 
-  createLists(){
+  createLists() {
 
   }
 
-  loadLists(){
-
-  }
-
-loadDocuments(){
-    this.http.get<UserResponse>("/documents").subscribe(
-      data=>{
-      this.documents=data.results;
-      var temparr=[];
-      for(var x=0;x<this.documents.length;x++){
-        var temp={"id":""+this.documents[x].document_number,"name":''+this.documents[x].title};
-        temparr.push(temp);
+  loadLists() {
+    this.http.get<UserResponse>("/docstar/api/v1/list").subscribe(
+      data => {
+        var tempArr=[];
+        for(var x=0;x<data.length;x++){
+          var temp={"id":""+data[x]._id}
+          tempArr.push(temp);
+        }
+        this.listrows=tempArr;
+        console.log(this.listrows);
       }
-      // console.log(this.rows);
-      this.rows=temparr;
-    })
-}
+    )
+  }
+
+  loadDocuments() {
+    this.http.get<UserResponse>("/documents").subscribe(
+      data => {
+        this.documents = data.results;
+        var temparr = [];
+        for (var x = 0; x < this.documents.length; x++) {
+          var temp = {"id": "" + this.documents[x].document_number, "name": '' + this.documents[x].title};
+          temparr.push(temp);
+        }
+        // console.log(this.rows);
+        this.rows = temparr;
+      })
+  }
 
 
-
-  onTypeChange(value: any){
-    this.dtype=value;
+  onTypeChange(value: any) {
+    this.dtype = value;
     console.log(this.dtype);
   }
 
-  toggleSignificance(event){
-    if ( event.target.checked ) {
-      this.significance="1"
-    }else{
-      this.significance="0"
-    }
-  }
-  toggleReviewed(event){
-    if ( event.target.checked ) {
-      this.reviewed=true;
-    }else{
-      this.reviewed=false;
+  toggleSignificance(event) {
+    if (event.target.checked) {
+      this.significance = "1"
+    } else {
+      this.significance = "0"
     }
   }
 
-  refreshTable(){
+  toggleReviewed(event) {
+    if (event.target.checked) {
+      this.reviewed = true;
+    } else {
+      this.reviewed = false;
+    }
+  }
+
+  refreshTable() {
     this.retrieveDocuments();
   }
-  retrieveDocuments(){
+
+  retrieveDocuments() {
     // this.filter='';
     // this.http.get("/wordgame/api/admins/v3/users").subscribe(
     //   data => {
@@ -125,6 +139,7 @@ loadDocuments(){
     //   }
     // );
   }
+
   searchDocument() {
     // var search={"search":this.filter};
     // console.log(search);
@@ -136,7 +151,8 @@ loadDocuments(){
     // );
     // this.filter = '';
   }
-  viewDocument(event){
+
+  viewDocument(event) {
     // if(event=="create"){
     //   this.router.navigate(['createuser']);
     // }else{
@@ -152,35 +168,40 @@ loadDocuments(){
     //
     // }
 
-      var did=event.currentTarget.id;
-      this.http.get( "/documents/"+did,{} ).subscribe(
-        data => {
-          sessionStorage.setItem("check",JSON.stringify(data));
-          this.router.navigate(['documentitem']);
-        }
-      )
+    var did = event.currentTarget.id;
+    this.http.get("/documents/" + did, {}).subscribe(
+      data => {
+        sessionStorage.setItem("check", JSON.stringify(data));
+        this.router.navigate(['documentitem']);
+      }
+    )
 
   }
 
   displayCheck(row) {
     return row.name !== 'Ethel Price';
   }
+
   onActivate(event) {
     // console.log('Activate Event', event);
   }
-  onSelect({ selected }) {
+
+  onSelect({selected}) {
     // console.log('Select Event', selected, this.selected);
 
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
   }
 
-  viewUserList(){
+  viewUserList() {
     this.router.navigate(['userlist']);
   }
 }
+
 interface UserResponse {
   roles: string[];
-  headers:any;
-  results:any;
+  headers: any;
+  results: any;
+  documents:any;
+  length:any;
 }
