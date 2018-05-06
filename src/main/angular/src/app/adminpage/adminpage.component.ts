@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClient, HttpClientModule, HttpHeaders} from "@angular/common/http";
 import {Router, RouterModule} from "@angular/router";
 import {UserServiceService} from "../user-service.service";
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
@@ -27,7 +27,8 @@ export class AdminpageComponent implements OnInit {
     {prop: 'name'}
   ];
   selected = [];
-  ducumentList:any=[{_id:""}];
+  ducumentList: any = [{_id: ""}];
+
   constructor(private http: HttpClient, private router: Router, private userService: UserServiceService) {
     this.validateUser();
   }
@@ -72,35 +73,33 @@ export class AdminpageComponent implements OnInit {
     return row.height;
   }
 
-  createLists() {
-
-  }
-
 
   loadLists() {
     this.http.get<UserResponse>("/docstar/api/v1/list").subscribe(
       data => {
-        this.ducumentList=data;
-        var tempArr=[];
-        for(var x=0;x<data.length;x++){
-          var temp={"id":""+data[x]._id}
+        this.ducumentList = data;
+        var tempArr = [];
+        for (var x = 0; x < data.length; x++) {
+          var temp = {"id": "" + data[x]._id}
           tempArr.push(temp);
         }
-        this.listrows=tempArr;
+        this.listrows = tempArr;
         console.log(this.listrows);
       }
     )
   }
-  viewUser(){
-    var uid=this.user._id;
-    this.http.get( "/docstar/api/v1/"+uid,{} ).subscribe(
+
+  viewUser() {
+    var uid = this.user._id;
+    this.http.get("/docstar/api/v1/" + uid, {}).subscribe(
       data => {
-        sessionStorage.setItem("check",JSON.stringify(data));
+        sessionStorage.setItem("check", JSON.stringify(data));
         this.router.navigate(['userinfer']);
       }
     )
 
   }
+
   loadDocuments() {
     this.http.get<UserResponse>("/documents").subscribe(
       data => {
@@ -164,21 +163,6 @@ export class AdminpageComponent implements OnInit {
   }
 
   viewDocument(event) {
-    // if(event=="create"){
-    //   this.router.navigate(['createuser']);
-    // }else{
-    //   // console.log("row id:"+event.target)
-    //   var uid=event.currentTarget.id;
-    //
-    //   this.http.get( "/wordgame/api/admins/v3/"+uid,{} ).subscribe(
-    //     data => {
-    //       sessionStorage.setItem("check",JSON.stringify(data));
-    //       this.router.navigate(['useritem']);
-    //     }
-    //   )
-    //
-    // }
-
     var did = event.currentTarget.id;
     this.http.get("/documents/" + did, {}).subscribe(
       data => {
@@ -204,19 +188,86 @@ export class AdminpageComponent implements OnInit {
     this.selected.push(...selected);
   }
 
+  DocumentSelected=[];
+  onDocumentSelect(event){
+    // this.DocumentSelected.splice(0, this.DocumentSelected.length);
+    // this.DocumentSelected.push(...DocumentSelected)
+    var select=event.selected[0].id;
+    console.log(select);
+    sessionStorage.setItem("checkList",select);
+    this.router.navigate(['listitem']);
+  }
+
+
   viewUserList() {
     this.router.navigate(['userlist']);
   }
 
-  onListChange(event){
+  selectedList: any;
 
+  onListChange(event) {
+    this.selectedList = event;
+    // console.log(event);
+  }
+
+  createLists() {
+    // console.log(this.selectedList)
+    var str="";
+    this.selected.forEach(function(value,key,arr){
+      if(key!=arr.length-1)  {
+        str=str+value.id+","
+      }else {
+        str=str+value.id
+      }
+
+    })
+    var resultDocuments={};
+    console.log(str);
+    if(this.selected.length>1){
+      this.http.get<UserResponse>("/listdocuments/"+str).subscribe(
+        data=>{
+          // console.log(data);
+          resultDocuments={"documents":data.results}
+          this.ajaxCreateLists(resultDocuments)
+          console.log(resultDocuments);
+        }
+      )
+    }else {
+
+      this.http.get<UserResponse>("/documents/"+str).subscribe(
+        data=>{
+          // console.log(data);
+          resultDocuments={"documents":data}
+          this.ajaxCreateLists(resultDocuments)
+          console.log(resultDocuments);
+        }
+      )
+    }
+  }
+  ajaxCreateLists(resultDocuments){
+    let head = new HttpHeaders({ 'Content-Type': 'application/json' });
+    if(this.selectedList=="create"){
+      console.log('Create');
+      this.http.post<UserResponse>("/docstar/api/v1/list",resultDocuments,{headers : head}).subscribe(
+        data=>{
+          console.log(data)
+          this.loadLists();
+        }
+      )
+
+    }else{
+      console.log('Update');
+
+    }
   }
 }
+
+
 
 interface UserResponse {
   roles: string[];
   headers: any;
   results: any;
-  documents:any;
-  length:any;
+  documents: any;
+  length: any;
 }

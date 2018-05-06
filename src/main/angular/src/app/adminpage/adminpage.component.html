@@ -116,8 +116,8 @@
         <li *ngIf="!selected?.length">No Selections</li>
       </ul>
       <label>Choose List</label>
-      <select id="listId" (ngModelChange)="onListChange($event)" style="width: 10%;margin-top: 10px ">
-        <option value="Create New">Create New</option>
+      <select id="listId" (ngModelChange)="onListChange($event)" [(ngModel)]="selectedList" style="width: 10%;margin-top: 10px ">
+        <option value="create">Create New</option>
         <option *ngFor="let list of ducumentList" [ngValue]="list._id">{{list._id}}</option>
       </select>
       <button type="submit" (click)="createLists()" class="btn btn-primary" style="margin-top: 10px">Create Lists</button>
@@ -132,7 +132,12 @@
       class="bootstrap"
       [rows]="listrows"
       [columnMode]="'force'"
-      [rowHeight]="'auto'">
+      [rowHeight]="'auto'"
+      [selected]="DocumentSelected"
+      [selectionType]="'single'"
+
+      (select)='onDocumentSelect($event)'
+    >
       <ngx-datatable-column name="id"></ngx-datatable-column>
     </ngx-datatable>
     </div>

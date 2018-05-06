@@ -83,14 +83,19 @@ public class DocumentController {
 
         String value = getDocuments("/api/v1/documents.json", "per_page=1000");
 //        System.out.println(value);
-
         return toDocumentsObj(value);
     }
 
     @RequestMapping(value = "/documents/{did}", method = RequestMethod.GET)
     public Document findDocumentByDocumentNumber(@PathVariable String did) throws IOException, URISyntaxException {
         String value = getDocuments("/api/v1/documents/" + did + ".json", "");
-        return toDocumentObj(value);
+            return toDocumentObj(value);
     }
 
+
+    @RequestMapping(value = "/listdocuments/{did}", method = RequestMethod.GET)
+    public Result findDocumentsByDocumentNumber(@PathVariable String did) throws IOException, URISyntaxException {
+        String value = getDocuments("/api/v1/documents/" + did + ".json", "");
+        return toDocumentsObj(value);
+    }
 }

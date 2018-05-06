@@ -22,4 +22,8 @@ public class DocumentListService {
     public DocumentList createLists(DocumentList d) {
         return documentListRepository.save(d);
     }
+
+    public DocumentList findById(String lid){
+        return documentListRepository.findById(lid).get();
+    }
 }

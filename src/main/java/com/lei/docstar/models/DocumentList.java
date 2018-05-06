@@ -8,6 +8,15 @@ public class DocumentList {
 
     private String _id;
     private List<Document> documents;
+    private List<String> users;
+
+    public List<String> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<String> users) {
+        this.users = users;
+    }
 
     public String get_id() {
         return _id;

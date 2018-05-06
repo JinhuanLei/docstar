@@ -3,10 +3,7 @@ package com.lei.docstar.controllers;
 import com.lei.docstar.models.DocumentList;
 import com.lei.docstar.services.DocumentListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +23,12 @@ public class ListController {
     public List<DocumentList> getList() {
 
         return documentListService.findAll();
+    }
+
+
+    @RequestMapping(value = "/docstar/api/v1/list/{lid}", method = RequestMethod.GET)
+    public DocumentList getListById(@PathVariable String lid){
+
+        return documentListService.findById(lid);
     }
 }
