@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./src/app/adminpage/adminpage.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"page3\">\n  <nav class=\"navbar navbar-inverse\">\n    <div class=\"container-fluid\">\n      <!-- Brand and toggle get grouped for better mobile display -->\n\n\n      <!-- Collect the nav links, forms, and other content for toggling -->\n      <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n        <ul class=\"nav navbar-nav\">\n\n          <li class=\"dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\"\n               aria-expanded=\"false\">{{user.username}}<span class=\"caret\"></span></a>\n            <ul class=\"dropdown-menu\">\n              <li><a (click)=\"viewUser()\">Edit</a></li>\n            </ul>\n          </li>\n          <li><a href=\"/adminpage\">Admin</a></li>\n          <li><a href=\"/userpage\">User</a></li>\n        </ul>\n        <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\"\n                (click)=\"logout()\">Log Out\n        </button>\n        -->\n\n      </div>\n    </div>\n  </nav>\n  <br>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <a (click)=\"viewUserList()\" style=\"cursor: pointer;\">Manage Users</a>\n  </div>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style=\"margin-top: 10px\">\n\n      <div class=\"col-md-4 col-md-offset-3\">\n        <label>Type</label>\n        <select class=\"form-control\" id=\"dtype\" name=\"dtype\" (ngModelChange)=\"onTypeChange($event)\">\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <option value=\"\" disabled selected>Select your Type</option>\n          <option value=\"RULE\">rule</option>\n          <option value=\"PRORULE\">prorule</option>\n          <option value=\"NOTICE\">notice</option>\n          <option value=\"PRESDOCU\">presdocu</option>\n          <!--<option *ngFor=\"let list of levelslist\">{{list.name}}</option>-->\n        </select>\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Title</label>\n        <input type=\"text\" class=\"form-control\" id=\"title\" placeholder=\"Document Tile\" [(ngModel)]=\"title\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Zipcode</label>\n        <input type=\"text\" class=\"form-control\" id=\"zipcode\" placeholder=\"Zipcode\" [(ngModel)]=\"zipcode\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n        <input type=\"checkbox\" id=\"significance\" (change)=\"toggleSignificance($event)\"> Significance\n        <input type=\"checkbox\" id=\"reviewed\" (change)=\"toggleReviewed($event)\" style=\"margin-left: 20px\"> Reviewed\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n\n        <button type=\"submit\" (click)=\"searchDocument()\" class=\"btn btn-primary\">Search</button>\n        <button type=\"submit\" (click)=\"refreshTable()\" style=\"margin-left: 20px\" class=\"btn btn-primary\">Refresh\n        </button>\n\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n\n\n    <div style='float:left;width:90%'>\n      <ngx-datatable\n        style=\"width: 95%\"\n        class=\"bootstrap\"\n        [rows]=\"rows\"\n        [columnMode]=\"'flex'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [limit]=\"10\"\n        [selected]=\"selected\"\n        [selectionType]=\"'checkbox'\"\n        [selectAllRowsOnPage]=\"false\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event)\"\n        (select)='onSelect($event)'>\n        <ngx-datatable-column\n          [width]=\"30\"\n          [sortable]=\"false\"\n          [canAutoResize]=\"false\"\n          [draggable]=\"false\"\n          [resizeable]=\"false\"\n          [headerCheckboxable]=\"true\"\n          [checkboxable]=\"true\">\n        </ngx-datatable-column>\n        <ngx-datatable-column name=\"id\" [flexGrow]=\"1\"></ngx-datatable-column>\n        <ngx-datatable-column name=\"name\" [flexGrow]=\"5\"></ngx-datatable-column>\n\n      </ngx-datatable>\n    </div>\n    <div class='selected-column' style=\"margin-left: 20px\">\n      <h4>Selections\n        <small>({{selected?.length}})</small>\n      </h4>\n      <ul>\n        <li *ngFor='let sel of selected'>\n          {{sel.id}}\n        </li>\n        <li *ngIf=\"!selected?.length\">No Selections</li>\n      </ul>\n      <label>Choose List</label>\n      <select id=\"listId\" (ngModelChange)=\"onListChange($event)\" [(ngModel)]=\"selectedList\" style=\"width: 10%;margin-top: 10px \">\n        <option value=\"create\">Create New</option>\n        <option *ngFor=\"let list of ducumentList\" [ngValue]=\"list._id\">{{list._id}}</option>\n      </select>\n      <button type=\"submit\" (click)=\"createLists()\" class=\"btn btn-primary\" style=\"margin-top: 10px\">Create Lists</button>\n    </div>\n  </div>\n\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style='float:left;width:90%'>\n      <label>Document Lists</label>\n    <ngx-datatable\n      class=\"bootstrap\"\n      [rows]=\"listrows\"\n      [columnMode]=\"'force'\"\n      [rowHeight]=\"'auto'\"\n      [selected]=\"DocumentSelected\"\n      [selectionType]=\"'single'\"\n\n      (select)='onDocumentSelect($event)'\n    >\n      <ngx-datatable-column name=\"id\"></ngx-datatable-column>\n    </ngx-datatable>\n    </div>\n  </div>\n\n\n</div>\n\n\n"
+module.exports = "<div id=\"page3\">\n  <nav class=\"navbar navbar-inverse\">\n    <div class=\"container-fluid\">\n      <!-- Brand and toggle get grouped for better mobile display -->\n\n\n      <!-- Collect the nav links, forms, and other content for toggling -->\n      <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n        <ul class=\"nav navbar-nav\">\n\n          <li class=\"dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\"\n               aria-expanded=\"false\">{{user.username}}<span class=\"caret\"></span></a>\n            <ul class=\"dropdown-menu\">\n              <li><a (click)=\"viewUser()\">Edit</a></li>\n            </ul>\n          </li>\n          <li><a href=\"/adminpage\">Admin</a></li>\n          <li><a href=\"/userpage\">User</a></li>\n        </ul>\n        <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\"\n                (click)=\"logout()\">Log Out\n        </button>\n        -->\n\n      </div>\n    </div>\n  </nav>\n  <br>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <a (click)=\"viewUserList()\" style=\"cursor: pointer;\">Manage Users</a>\n  </div>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style=\"margin-top: 10px\">\n\n      <div class=\"col-md-4 col-md-offset-3\">\n        <label>Type</label>\n        <select class=\"form-control\" id=\"dtype\" name=\"dtype\" (ngModelChange)=\"onTypeChange($event)\">\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <!--<option value={{font.category}}>{{font.category}}</option>-->\n          <option value=\"\" disabled selected>Select your Type</option>\n          <option value=\"RULE\">rule</option>\n          <option value=\"PRORULE\">prorule</option>\n          <option value=\"NOTICE\">notice</option>\n          <option value=\"PRESDOCU\">presdocu</option>\n          <!--<option *ngFor=\"let list of levelslist\">{{list.name}}</option>-->\n        </select>\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Title</label>\n        <input type=\"text\" class=\"form-control\" id=\"title\" placeholder=\"Document Tile\" [(ngModel)]=\"title\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3 \">\n        <label>Zipcode</label>\n        <input type=\"text\" class=\"form-control\" id=\"zipcode\" placeholder=\"Zipcode\" [(ngModel)]=\"zipcode\">\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n        <input type=\"checkbox\" id=\"significance\" (change)=\"toggleSignificance($event)\"> Significance\n        <input type=\"checkbox\" id=\"reviewed\" (change)=\"toggleReviewed($event)\" style=\"margin-left: 20px\"> Reviewed\n\n      </div>\n      <div class=\"form-group col-md-4 col-md-offset-3\">\n\n        <button type=\"submit\" (click)=\"searchDocument()\" class=\"btn btn-primary\">Search</button>\n        <button type=\"submit\" (click)=\"refreshTable()\" style=\"margin-left: 20px\" class=\"btn btn-primary\">Refresh\n        </button>\n\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style='float:left;width:90%'>\n      <ngx-datatable\n        style=\"width: 95%\"\n        class=\"bootstrap\"\n        [rows]=\"rows\"\n        [columnMode]=\"'flex'\"\n        [headerHeight]=\"50\"\n        [footerHeight]=\"50\"\n        [rowHeight]=\"'auto'\"\n        [limit]=\"10\"\n        [selected]=\"selected\"\n        [selectionType]=\"'checkbox'\"\n        [selectAllRowsOnPage]=\"false\"\n        [displayCheck]=\"displayCheck\"\n        (activate)=\"onActivate($event)\"\n        (select)='onSelect($event)'>\n        <ngx-datatable-column\n          [width]=\"30\"\n          [sortable]=\"false\"\n          [canAutoResize]=\"false\"\n          [draggable]=\"false\"\n          [resizeable]=\"false\"\n          [headerCheckboxable]=\"true\"\n          [checkboxable]=\"true\">\n        </ngx-datatable-column>\n        <ngx-datatable-column name=\"id\" [flexGrow]=\"1\"></ngx-datatable-column>\n        <ngx-datatable-column name=\"name\" [flexGrow]=\"5\"></ngx-datatable-column>\n      </ngx-datatable>\n    </div>\n    <div class='selected-column' style=\"margin-left: 20px\">\n      <h4>Selections\n        <small>({{selected?.length}})</small>\n      </h4>\n      <ul>\n        <li *ngFor='let sel of selected'>\n          {{sel.id}}\n        </li>\n        <li *ngIf=\"!selected?.length\">No Selections</li>\n      </ul>\n      <label>Choose List</label>\n      <select id=\"listId\" (ngModelChange)=\"onListChange($event)\" [(ngModel)]=\"selectedList\" style=\"width: 10%;margin-top: 10px \">\n        <option value=\"create\">Create New</option>\n        <option *ngFor=\"let list of ducumentList\" [ngValue]=\"list._id\">{{list._id}}</option>\n      </select>\n      <button type=\"submit\" (click)=\"createLists()\" *ngIf=\"selectedList=='create'\" class=\"btn btn-primary\" style=\"margin-top: 10px\">Create Lists</button>\n      <button type=\"submit\" (click)=\"createLists()\" *ngIf=\"selectedList!='create'\" class=\"btn btn-primary\" style=\"margin-top: 10px\">Update Lists</button>\n    </div>\n  </div>\n\n\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <div style='float:left;width:90%'>\n      <label>Document Lists</label>\n    <ngx-datatable\n      class=\"bootstrap\"\n      [rows]=\"listrows\"\n      [columnMode]=\"'force'\"\n      [rowHeight]=\"'auto'\"\n      [selected]=\"DocumentSelected\"\n      [selectionType]=\"'single'\"\n\n      (select)='onDocumentSelect($event)'\n    >\n      <ngx-datatable-column name=\"id\"></ngx-datatable-column>\n    </ngx-datatable>\n    </div>\n  </div>\n\n\n</div>\n\n\n"
 
 /***/ }),
 
@@ -229,7 +229,7 @@ var AdminpageComponent = /** @class */ (function () {
             this.http.get("/listdocuments/" + str).subscribe(function (data) {
                 // console.log(data);
                 resultDocuments = { "documents": data.results };
-                _this.ajaxCreateLists(resultDocuments);
+                _this.ajaxLists(resultDocuments);
                 console.log(resultDocuments);
             });
         }
@@ -237,12 +237,12 @@ var AdminpageComponent = /** @class */ (function () {
             this.http.get("/documents/" + str).subscribe(function (data) {
                 // console.log(data);
                 resultDocuments = { "documents": data };
-                _this.ajaxCreateLists(resultDocuments);
+                _this.ajaxLists(resultDocuments);
                 console.log(resultDocuments);
             });
         }
     };
-    AdminpageComponent.prototype.ajaxCreateLists = function (resultDocuments) {
+    AdminpageComponent.prototype.ajaxLists = function (resultDocuments) {
         var _this = this;
         var head = new http_1.HttpHeaders({ 'Content-Type': 'application/json' });
         if (this.selectedList == "create") {
@@ -254,6 +254,16 @@ var AdminpageComponent = /** @class */ (function () {
         }
         else {
             console.log('Update');
+            this.http.get("/docstar/api/v1/list/" + this.selectedList).subscribe(function (data) {
+                console.log(data);
+                var temp1 = data.documents;
+                var temp2 = temp1.concat(resultDocuments.documents);
+                data.documents = temp2;
+                // console.log(data);
+                _this.http.put("/docstar/api/v1/list", data, { headers: head }).subscribe(function (data) {
+                    console.log(data);
+                });
+            });
         }
     };
     __decorate([
@@ -462,7 +472,7 @@ module.exports = ""
 /***/ "./src/app/list-item/list-item.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"page3\">\n  <nav class=\"navbar navbar-inverse\">\n    <div class=\"container-fluid\">\n      <!-- Brand and toggle get grouped for better mobile display -->\n\n\n      <!-- Collect the nav links, forms, and other content for toggling -->\n      <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n        <ul class=\"nav navbar-nav\">\n\n          <li class=\"dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">{{suser.username}}<span class=\"caret\"></span></a>\n            <ul class=\"dropdown-menu\">\n              <li><a routerLink=\"/userinfer\">Edit</a></li>\n            </ul>\n          </li>\n          <li><a routerLink=\"/adminpage\">Admin</a></li>\n          <li><a routerLink=\"/userpage\">User</a></li>\n        </ul>\n        <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\" (click)=\"logout()\">Log Out</button>-->\n\n      </div>\n    </div>\n  </nav>\n\n  <br>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <table class=\"table table-bordered\" style=\"width:100%\" id=\"userList\" >\n      <thead>\n      <tr>\n        <th>Document Id</th>\n        <th>Document Title</th>\n        <th></th>\n      </tr>\n      </thead>\n      <tbody id=\"userTB\">\n      <tr *ngFor=\"let list of lists\" (click)=\"viewDocument($event)\" style=\"cursor: pointer;\" id={{list.document_number}}>\n        <td>{{list.document_number}}</td>\n        <td>{{list.title}}</td>\n        <td><a>Delete</a></td>\n      </tr>\n      </tbody>\n    </table>\n  </div>\n\n</div>\n"
+module.exports = "<div id=\"page3\">\n  <nav class=\"navbar navbar-inverse\">\n    <div class=\"container-fluid\">\n      <!-- Brand and toggle get grouped for better mobile display -->\n\n\n      <!-- Collect the nav links, forms, and other content for toggling -->\n      <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n        <ul class=\"nav navbar-nav\">\n\n          <li class=\"dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">{{suser.username}}<span class=\"caret\"></span></a>\n            <ul class=\"dropdown-menu\">\n              <li><a routerLink=\"/userinfer\">Edit</a></li>\n            </ul>\n          </li>\n          <li><a routerLink=\"/adminpage\">Admin</a></li>\n          <li><a routerLink=\"/userpage\">User</a></li>\n        </ul>\n        <button type=\"button\" class=\"btn btn-default navbar-btn navbar-right\" style=\"margin-right: 20px\" (click)=\"logout()\">Log Out</button>-->\n\n      </div>\n    </div>\n  </nav>\n\n  <br>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n    <table class=\"table table-bordered\" style=\"width:100%\" id=\"userList\" >\n      <thead>\n      <tr>\n        <th>Document Id</th>\n        <th>Document Title</th>\n        <th></th>\n      </tr>\n      </thead>\n      <tbody id=\"userTB\">\n      <tr *ngFor=\"let list of lists\" (click)=\"viewDocument($event)\" style=\"cursor: pointer;\" id={{list.document_number}}>\n        <td>{{list.document_number}}</td>\n        <td>{{list.title}}</td>\n        <td><a (click)=\"deleteDocument(list.document_number)\">Delete</a></td>\n      </tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n\n    <div class=\"col-md-3\">\n      <label>Select Reviewer</label>\n   <select class=\"form-control\" [(ngModel)]=\"documentlistObj.reviewer\" (ngModelChange)=\"onReviewerChange($event)\">\n     <option *ngFor=\"let user of users\" [ngValue]=\"user._id\" >{{user.username}}</option>\n   </select>\n      <label *ngIf=\"status\" style=\"color:darkgreen\">Update successful</label>\n    </div>\n  </div>\n  <div class=\"col-md-10 col-md-offset-1 well well-sm\">\n  <a routerLink=\"/adminpage\">Back</a>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -491,15 +501,25 @@ var ListItemComponent = /** @class */ (function () {
         this.router = router;
         this.userService = userService;
         this.suser = { "username": "" };
+        this.documentlistObj = { reviewer: "" };
+        this.status = false;
+        this.reviewer = "";
         this.validateUser();
+        this.loadUsers();
     }
     ListItemComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (sessionStorage.getItem("checkList")) {
             var objstr = sessionStorage.getItem("checkList");
-            console.log(objstr);
             sessionStorage.removeItem("checkList");
-            this.http.get("/docstar/api/v1/list/" + objstr).subscribe(function (data) {
+            this.lid = objstr;
+        }
+        else {
+            this.router.navigateByUrl('adminpage');
+        }
+        if (this.lid) {
+            this.http.get("/docstar/api/v1/list/" + this.lid).subscribe(function (data) {
+                _this.documentlistObj = data;
                 _this.lists = data.documents;
             });
         }
@@ -530,11 +550,38 @@ var ListItemComponent = /** @class */ (function () {
             _this.router.navigate(['login']);
         });
     };
-    ListItemComponent.prototype.loadList = function () {
-        this.http.get("/docstar/api/v1/list/").subscribe(function (data) {
+    ListItemComponent.prototype.loadUsers = function () {
+        var _this = this;
+        this.http.get("/docstar/api/v1/users").subscribe(function (data) {
+            _this.users = data;
+        });
+    };
+    ListItemComponent.prototype.onReviewerChange = function (event) {
+        var _this = this;
+        this.reviewer = event;
+        this.documentlistObj.reviewer = this.reviewer;
+        console.log(this.documentlistObj);
+        this.http.put("/docstar/api/v1/list", this.documentlistObj).subscribe(function (data) {
+            console.log(data);
+            _this.status = true;
         });
     };
     ListItemComponent.prototype.viewDocument = function (event) {
+    };
+    ListItemComponent.prototype.deleteDocument = function (event) {
+        var _this = this;
+        console.log(event);
+        this.lists.forEach(function (value, key, arr) {
+            console.log(value.document_number == event);
+            if (value.document_number == event) {
+                arr.splice(key, 1);
+            }
+        });
+        this.documentlistObj.documents = this.lists;
+        this.http.put("/docstar/api/v1/list", this.documentlistObj).subscribe(function (data) {
+            _this.documentlistObj = data;
+            _this.lists = data.documents;
+        });
     };
     ListItemComponent = __decorate([
         core_1.Component({

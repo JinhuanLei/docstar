@@ -73,8 +73,6 @@
   </div>
 
   <div class="col-md-10 col-md-offset-1 well well-sm">
-
-
     <div style='float:left;width:90%'>
       <ngx-datatable
         style="width: 95%"
@@ -102,7 +100,6 @@
         </ngx-datatable-column>
         <ngx-datatable-column name="id" [flexGrow]="1"></ngx-datatable-column>
         <ngx-datatable-column name="name" [flexGrow]="5"></ngx-datatable-column>
-
       </ngx-datatable>
     </div>
     <div class='selected-column' style="margin-left: 20px">
@@ -120,7 +117,8 @@
         <option value="create">Create New</option>
         <option *ngFor="let list of ducumentList" [ngValue]="list._id">{{list._id}}</option>
       </select>
-      <button type="submit" (click)="createLists()" class="btn btn-primary" style="margin-top: 10px">Create Lists</button>
+      <button type="submit" (click)="createLists()" *ngIf="selectedList=='create'" class="btn btn-primary" style="margin-top: 10px">Create Lists</button>
+      <button type="submit" (click)="createLists()" *ngIf="selectedList!='create'" class="btn btn-primary" style="margin-top: 10px">Update Lists</button>
     </div>
   </div>
 

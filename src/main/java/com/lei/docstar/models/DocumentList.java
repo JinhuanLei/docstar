@@ -8,14 +8,14 @@ public class DocumentList {
 
     private String _id;
     private List<Document> documents;
-    private List<String> users;
+    private String reviewer;
 
-    public List<String> getUsers() {
-        return users;
+    public String getReviewer() {
+        return reviewer;
     }
 
-    public void setUsers(List<String> users) {
-        this.users = users;
+    public void setReviewer(String reviewer) {
+        this.reviewer = reviewer;
     }
 
     public String get_id() {

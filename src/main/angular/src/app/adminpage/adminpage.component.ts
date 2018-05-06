@@ -188,13 +188,14 @@ export class AdminpageComponent implements OnInit {
     this.selected.push(...selected);
   }
 
-  DocumentSelected=[];
-  onDocumentSelect(event){
+  DocumentSelected = [];
+
+  onDocumentSelect(event) {
     // this.DocumentSelected.splice(0, this.DocumentSelected.length);
     // this.DocumentSelected.push(...DocumentSelected)
-    var select=event.selected[0].id;
+    var select = event.selected[0].id;
     console.log(select);
-    sessionStorage.setItem("checkList",select);
+    sessionStorage.setItem("checkList", select);
     this.router.navigate(['listitem']);
   }
 
@@ -212,56 +213,71 @@ export class AdminpageComponent implements OnInit {
 
   createLists() {
     // console.log(this.selectedList)
-    var str="";
-    this.selected.forEach(function(value,key,arr){
-      if(key!=arr.length-1)  {
-        str=str+value.id+","
-      }else {
-        str=str+value.id
+    var str = "";
+    this.selected.forEach(function (value, key, arr) {
+      if (key != arr.length - 1) {
+        str = str + value.id + ","
+      } else {
+        str = str + value.id
       }
 
     })
-    var resultDocuments={};
+    var resultDocuments = {};
     console.log(str);
-    if(this.selected.length>1){
-      this.http.get<UserResponse>("/listdocuments/"+str).subscribe(
-        data=>{
+    if (this.selected.length > 1) {
+      this.http.get<UserResponse>("/listdocuments/" + str).subscribe(
+        data => {
           // console.log(data);
-          resultDocuments={"documents":data.results}
-          this.ajaxCreateLists(resultDocuments)
+          resultDocuments = {"documents": data.results}
+          this.ajaxLists(resultDocuments)
           console.log(resultDocuments);
         }
       )
-    }else {
+    } else {
 
-      this.http.get<UserResponse>("/documents/"+str).subscribe(
-        data=>{
+      this.http.get<UserResponse>("/documents/" + str).subscribe(
+        data => {
           // console.log(data);
-          resultDocuments={"documents":data}
-          this.ajaxCreateLists(resultDocuments)
+          resultDocuments = {"documents": data}
+          this.ajaxLists(resultDocuments)
           console.log(resultDocuments);
         }
       )
     }
   }
-  ajaxCreateLists(resultDocuments){
-    let head = new HttpHeaders({ 'Content-Type': 'application/json' });
-    if(this.selectedList=="create"){
+
+
+  ajaxLists(resultDocuments) {
+    let head = new HttpHeaders({'Content-Type': 'application/json'});
+    if (this.selectedList == "create") {
       console.log('Create');
-      this.http.post<UserResponse>("/docstar/api/v1/list",resultDocuments,{headers : head}).subscribe(
-        data=>{
+      this.http.post<UserResponse>("/docstar/api/v1/list", resultDocuments, {headers: head}).subscribe(
+        data => {
           console.log(data)
           this.loadLists();
         }
       )
 
-    }else{
+    } else {
       console.log('Update');
+      this.http.get<UserResponse>("/docstar/api/v1/list/" + this.selectedList).subscribe(
+        data => {
+             console.log(data);
+            var temp1=data.documents;
+            var temp2=temp1.concat(resultDocuments.documents);
+            data.documents=temp2;
+            // console.log(data);
 
+            this.http.put<UserResponse>("/docstar/api/v1/list",data,{headers: head}).subscribe(
+              data=>{
+                console.log(data);
+              }
+            )
+        }
+      )
     }
   }
 }
-
 
 
 interface UserResponse {

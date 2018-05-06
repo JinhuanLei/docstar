@@ -38,10 +38,23 @@
       <tr *ngFor="let list of lists" (click)="viewDocument($event)" style="cursor: pointer;" id={{list.document_number}}>
         <td>{{list.document_number}}</td>
         <td>{{list.title}}</td>
-        <td><a>Delete</a></td>
+        <td><a (click)="deleteDocument(list.document_number)">Delete</a></td>
       </tr>
       </tbody>
     </table>
+  </div>
+  <div class="col-md-10 col-md-offset-1 well well-sm">
+
+    <div class="col-md-3">
+      <label>Select Reviewer</label>
+   <select class="form-control" [(ngModel)]="documentlistObj.reviewer" (ngModelChange)="onReviewerChange($event)">
+     <option *ngFor="let user of users" [ngValue]="user._id" >{{user.username}}</option>
+   </select>
+      <label *ngIf="status" style="color:darkgreen">Update successful</label>
+    </div>
+  </div>
+  <div class="col-md-10 col-md-offset-1 well well-sm">
+  <a routerLink="/adminpage">Back</a>
   </div>
 
 </div>

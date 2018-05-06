@@ -31,4 +31,10 @@ public class ListController {
 
         return documentListService.findById(lid);
     }
+
+    @RequestMapping(value = "/docstar/api/v1/list", method = RequestMethod.PUT)
+    public DocumentList updateList(@RequestBody DocumentList d){
+
+        return documentListService.updateList(d);
+    }
 }
