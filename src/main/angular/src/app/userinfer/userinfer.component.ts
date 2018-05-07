@@ -20,6 +20,7 @@ export class UserinferComponent implements OnInit {
   checkMode:any=false;
   ngOnInit() {
     this.checkMode=false;
+    console.log(sessionStorage.getItem("check"));
     if(sessionStorage.getItem("check")){
       this.checkMode=true;
       var objstr=sessionStorage.getItem("check");
@@ -40,7 +41,7 @@ export class UserinferComponent implements OnInit {
         if(data.roles.length>1){
           // this.router.navigateByUrl( 'adminpage');
         }else if(data.roles.length==1&&data.roles[0]=="USER"){
-          this.router.navigateByUrl( 'userpage');
+          // this.router.navigateByUrl( 'userpage');
         }
       },
       error=>{
@@ -64,11 +65,20 @@ export class UserinferComponent implements OnInit {
 
 
   backToMainPage(){
-    if(this.checkMode){
-      this.router.navigate(['userlist']);
-    }else{
+    // if(this.checkMode){
+    //   this.router.navigate(['userlist']);
+    // }else if(this.CurrentUser.roles.length>1){
+    //   this.router.navigate(['adminpage']);
+    // }else{
+    //   this.router.navigate(['userpage']);
+    // }
+
+    if(this.CurrentUser.roles.length>1){
       this.router.navigate(['adminpage']);
+    }else{
+      this.router.navigate(['userpage']);
     }
+
   }
 
   updateUser(){

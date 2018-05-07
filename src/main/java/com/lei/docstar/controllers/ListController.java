@@ -27,14 +27,20 @@ public class ListController {
 
 
     @RequestMapping(value = "/docstar/api/v1/list/{lid}", method = RequestMethod.GET)
-    public DocumentList getListById(@PathVariable String lid){
+    public DocumentList getListById(@PathVariable String lid) {
 
         return documentListService.findById(lid);
     }
 
     @RequestMapping(value = "/docstar/api/v1/list", method = RequestMethod.PUT)
-    public DocumentList updateList(@RequestBody DocumentList d){
+    public DocumentList updateList(@RequestBody DocumentList d) {
 
         return documentListService.updateList(d);
     }
+
+    @RequestMapping(value = "/docstar/api/v1/list/reviewer", method = RequestMethod.GET)
+    public List<DocumentList> getListByReviewer(@RequestParam String reviewer) {
+        return documentListService.fingByReviewer(reviewer);
+    }
+
 }

@@ -15,7 +15,7 @@
               <li><a routerLink="/userinfer">Edit</a></li>
             </ul>
           </li>
-          <li><a routerLink="/adminpage">Admin</a></li>
+          <li><a routerLink="/adminpage" *ngIf="ifAdmin">Admin</a></li>
           <li><a routerLink="/userpage">User</a></li>
         </ul>
         <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 20px" (click)="logout()">Log Out</button>-->

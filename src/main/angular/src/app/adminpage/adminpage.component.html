@@ -16,8 +16,8 @@
               <li><a (click)="viewUser()">Edit</a></li>
             </ul>
           </li>
-          <li><a href="/adminpage">Admin</a></li>
-          <li><a href="/userpage">User</a></li>
+          <li><a routerLink="/adminpage">Admin</a></li>
+          <li><a routerLink="/userpage">User</a></li>
         </ul>
         <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 20px"
                 (click)="logout()">Log Out
@@ -36,7 +36,7 @@
 
       <div class="col-md-4 col-md-offset-3">
         <label>Type</label>
-        <select class="form-control" id="dtype" name="dtype" (ngModelChange)="onTypeChange($event)">
+        <select class="form-control" id="dtype" name="dtype" [(ngModel)]="dtype" (ngModelChange)="onTypeChange($event)">
           <!--<option value={{font.category}}>{{font.category}}</option>-->
           <!--<option value={{font.category}}>{{font.category}}</option>-->
           <option value="" disabled selected>Select your Type</option>
@@ -58,16 +58,20 @@
       </div>
       <div class="form-group col-md-4 col-md-offset-3">
         <input type="checkbox" id="significance" (change)="toggleSignificance($event)"> Significance
-        <input type="checkbox" id="reviewed" (change)="toggleReviewed($event)" style="margin-left: 20px"> Reviewed
+        <!--<input type="checkbox" id="reviewed" (change)="toggleReviewed($event)" style="margin-left: 20px"> Reviewed-->
 
       </div>
       <div class="form-group col-md-4 col-md-offset-3">
 
         <button type="submit" (click)="searchDocument()" class="btn btn-primary">Search</button>
-        <button type="submit" (click)="refreshTable()" style="margin-left: 20px" class="btn btn-primary">Refresh
-        </button>
+        <button type="submit" (click)="refreshTable()" style="margin-left: 20px" class="btn btn-primary">Refresh</button>
 
       </div>
+
+      <div class="col-md-4 col-md-offset-3">
+        <label style="color: darkred" *ngIf="resultBoolean">No Results</label>
+      </div>
+
 
     </div>
   </div>

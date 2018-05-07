@@ -17,7 +17,7 @@ export class AdminpageComponent implements OnInit {
   @Input() documents: any;
   title: string;
   zipcode: string;
-  dtype: string;
+  dtype: string="";
   significance: string;
   reviewed: boolean;
   listrows: any;
@@ -114,7 +114,6 @@ export class AdminpageComponent implements OnInit {
       })
   }
 
-
   onTypeChange(value: any) {
     this.dtype = value;
     console.log(this.dtype);
@@ -137,29 +136,34 @@ export class AdminpageComponent implements OnInit {
   }
 
   refreshTable() {
-    this.retrieveDocuments();
+    this.loadDocuments();
   }
 
-  retrieveDocuments() {
-    // this.filter='';
-    // this.http.get("/wordgame/api/admins/v3/users").subscribe(
-    //   data => {
-    //     console.log("users:"+data);
-    //     this.users = data;
-    //   }
-    // );
-  }
 
+  resultBoolean:any=false;
   searchDocument() {
-    // var search={"search":this.filter};
-    // console.log(search);
-    // this.http.post("/wordgame/api/admins/v3/search",search).subscribe(
-    //   data => {
-    //     console.log("users:"+data);
-    //     this.users = data;
-    //   }
-    // );
-    // this.filter = '';
+    this.resultBoolean=false;
+    var search="per_page=50&order=relevance&conditions[term]="+this.title+"&conditions[type][]="+this.dtype+"&conditions[significant]="+this.significance+"&conditions[near][location]="+this.zipcode;
+    var query={"query":search};
+    console.log(search);
+    this.http.get<UserResponse>("/listdocuments/search",{params: query}).subscribe(
+      data=>{
+        console.log(data);
+        this.documents = data.results;
+        if(!data.results){
+          this.resultBoolean=true;
+          return;
+        }
+        var temparr = [];
+        for (var x = 0; x < this.documents.length; x++) {
+          var temp = {"id": "" + this.documents[x].document_number, "name": '' + this.documents[x].title};
+          temparr.push(temp);
+        }
+        // console.log(this.rows);
+        this.rows = temparr;
+      }
+    )
+
   }
 
   viewDocument(event) {

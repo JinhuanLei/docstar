@@ -22,11 +22,12 @@ export class ListItemComponent implements OnInit {
   ngOnInit() {
     if (sessionStorage.getItem("checkList")) {
       var objstr = sessionStorage.getItem("checkList");
-       sessionStorage.removeItem("checkList");
+       // sessionStorage.removeItem("checkList");
       this.lid = objstr;
-    }else {
-      this.router.navigateByUrl('adminpage');
     }
+    // else {
+    //   this.router.navigateByUrl('adminpage');
+    // }
     if (this.lid) {
       this.http.get<UserResponse>("/docstar/api/v1/list/" + this.lid).subscribe(
         data => {
@@ -36,7 +37,7 @@ export class ListItemComponent implements OnInit {
       )
     }
   }
-
+ifAdmin:any=false;
   validateUser() {
     this.http.get<UserResponse>("/docstar/api/v1/user").subscribe(
       data => {
@@ -44,6 +45,7 @@ export class ListItemComponent implements OnInit {
         this.suser = data;
         if (data.roles.length > 1) {
           // this.router.navigateByUrl( 'adminpage');
+          this.ifAdmin=true;
         } else if (data.roles.length == 1 && data.roles[0] == "USER") {
           this.router.navigateByUrl('userpage');
         }

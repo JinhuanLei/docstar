@@ -1,3 +1,57 @@
-<p>
-  documentitem
-</p>
+<div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.username}}<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a (click)="viewUser()">Edit</a></li>
+          </ul>
+        </li>
+        <li><a routerLink="/adminpage" *ngIf="ifAdmin">Admin</a></li>
+        <li><a routerLink="/userpage">User</a></li>
+      </ul>
+      <button type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 20px" (click)="logout()">Log Out</button>-->
+
+    </div>
+  </div>
+</nav>
+
+<div class="col-md-10 col-md-offset-1 well well-sm">
+  <label>Document Title:  </label>
+  <label>{{document.title}}</label>
+</div>
+
+<div class="col-md-10 col-md-offset-1 well well-sm">
+  <label>PDF_url: </label>
+  <a href={{document.pdf_url}}>Click Here</a>
+</div>
+  <div class="col-md-10 col-md-offset-1 well well-sm">
+    <div class="col-md-4 col-md-offset-3">
+      <label>Review</label>
+      <select class="form-control" id="review" name="review" [(ngModel)]="document.review" (ngModelChange)="onReviewChange($event)">
+        <!--<option value={{font.category}}>{{font.category}}</option>-->
+        <!--<option value={{font.category}}>{{font.category}}</option>-->
+        <option value="" disabled selected>Select your Review</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <!--<option *ngFor="let list of levelslist">{{list.name}}</option>-->
+      </select>
+
+    </div>
+  </div>
+
+<div class="col-md-10 col-md-offset-1 well well-sm">
+  <a routerLink="/userpage">Back</a>
+</div>
+</div>

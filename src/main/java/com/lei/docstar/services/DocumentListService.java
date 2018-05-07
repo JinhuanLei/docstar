@@ -30,4 +30,8 @@ public class DocumentListService {
     public DocumentList updateList(DocumentList d){
         return documentListRepository.save(d);
     }
+
+    public List<DocumentList> fingByReviewer(String reviewer){
+        return documentListRepository.findByReviewer(reviewer);
+    }
 }

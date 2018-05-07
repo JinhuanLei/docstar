@@ -14,10 +14,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URI;
@@ -32,7 +29,6 @@ public class DocumentController {
         URI uri = new URIBuilder()
                 .setScheme("https")
                 .setHost("www.federalregister.gov")
-//                .setPath(path+query)
                 .setPath(path)
                 .setCustomQuery(query)
                 .build();
@@ -65,7 +61,7 @@ public class DocumentController {
     }
 
     @RequestMapping(value = "/documents", method = RequestMethod.GET)
-    public Result LoadDocuments() throws ClientProtocolException, URISyntaxException, IOException {
+    public Result LoadDocudments() throws ClientProtocolException, URISyntaxException, IOException {
 //        Result result=null;
 //        for(int x=1;x<50;x++){
 //            String value = getDocuments("/api/v1/documents.json","?page="+x);
@@ -89,13 +85,19 @@ public class DocumentController {
     @RequestMapping(value = "/documents/{did}", method = RequestMethod.GET)
     public Document findDocumentByDocumentNumber(@PathVariable String did) throws IOException, URISyntaxException {
         String value = getDocuments("/api/v1/documents/" + did + ".json", "");
-            return toDocumentObj(value);
+        return toDocumentObj(value);
     }
 
 
     @RequestMapping(value = "/listdocuments/{did}", method = RequestMethod.GET)
     public Result findDocumentsByDocumentNumber(@PathVariable String did) throws IOException, URISyntaxException {
         String value = getDocuments("/api/v1/documents/" + did + ".json", "");
+        return toDocumentsObj(value);
+    }
+
+    @RequestMapping(value = "/listdocuments/search", method = RequestMethod.GET)
+    public Result findDocumentsByCondition(@RequestParam String query) throws IOException, URISyntaxException {
+        String value = getDocuments("/api/v1/documents.json", query);
         return toDocumentsObj(value);
     }
 }
